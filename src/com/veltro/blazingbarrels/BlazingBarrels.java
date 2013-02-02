@@ -12,14 +12,15 @@ import static org.lwjgl.opengl.GL11.*;
 
 /**
  * Main class, containing the {@link #BlazingBarrels(int, int) game object constructor}
- * and {@link #main(String[]) program launch point}.
+ * and {@link #main(String[]) program entry point}.
  * 
  * @author LinearLogic
+ * @version 0.0.2
  * @since 0.0.1
  */
 public class BlazingBarrels {
 
-	public static final String VERSION = "0.0.1";
+	public static final String VERSION = "0.0.2";
 	/**
 	 * If this flag is 'true', the program will log its activity to Console
 	 */
@@ -44,7 +45,7 @@ public class BlazingBarrels {
 	/**
 	 * The adjusted system time at which the last frame was rendered
 	 */
-	private long lastFrame;
+	private long lastFrameTime;
 
 	/**
 	 * The width, in pixels, of the game window
@@ -69,13 +70,16 @@ public class BlazingBarrels {
 		if (debugModeEnabled)
 		System.out.println("Constructing the game object. Window dimensions: " + windowWidth + "x" + windowHeight + " pixels.");
 		initDisplay(windowWidth, windowHeight);
-		lastFrame = getTime();
+		lastFrameTime = getTime();
 
 		running = true;
 		reload = false;
 		while(running) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Reset 2D and 3D
-			delta = (int) (getTime() - lastFrame);
+			long currentTime = getTime();
+			delta = (int) (currentTime - lastFrameTime);
+			lastFrameTime = currentTime;
+
 			Display.update();
 			Display.sync(60); // Framerate = 60 FPS
 			if (Display.isCloseRequested()) { // Exit without reloading
@@ -87,6 +91,7 @@ public class BlazingBarrels {
 				reload = true;
 			}
 		}
+
 		if (debugModeEnabled)
 			System.out.println("Destroying the openGL context and closing the game window.");
 		Display.destroy();
@@ -119,6 +124,10 @@ public class BlazingBarrels {
 	 */
 	public boolean isDebugModeEnabled() {
 		return debugModeEnabled;
+	}
+
+	public int getCurrentFPS() {
+		return 1000/delta;
 	}
 
 	/**
