@@ -1,0 +1,13 @@
+#Blazing Barrels
+
+Blazing Barrels is a 3-D first person shooter in a multiplayer environment.
+Players pilot space ships armed with a variety of weapons around various maps,
+accumulating kills and collecting perk items scattered around the map.
+
+The Blazing Barrels multiplayer server software is publicly available so that
+servers can be home-hosted or used in LAN configurations. There is currently no
+user  authorization protocol; anyone with a server's IP address can connect.
+
+Authors: LinearLogic (Jared), Deager4 (Vince)
+
+Language: Java (with LWJGL for graphics)
