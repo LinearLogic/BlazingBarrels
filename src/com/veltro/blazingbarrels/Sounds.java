@@ -7,6 +7,7 @@ import javax.sound.sampled.*;
 /**
  * @author deager4
  * @since 0.0.4
+ * @version 0.0.2
  */
 public enum Sounds {
    DEATH_SCREAM("Sounds\\Death Scream.wav"),   //a really really bad death scream
@@ -34,8 +35,8 @@ public enum Sounds {
    ROCKET_HIT("Sounds\\Rocket Hit.wav"),
    BULLET_HIT("Sounds\\Bullet Hit.wav"),
    TROLOLOL("Sounds\\Trololol.wav"),
-   BUTTON_ON("Sounds\\Button On.wav"),
-   BUTTON_OFF("Sounds\\Button Off.wav");
+   BUTTON_ON("Sounds\\BUTTON ON.wav"),
+   BUTTON_OFF("Sounds\\BUTTON OFF.wav");
    
    
    // Nested class for specifying volume
