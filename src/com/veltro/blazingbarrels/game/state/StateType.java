@@ -13,7 +13,7 @@ public enum StateType {
 	/**
 	 * The loading screen. Pressing the 'escape' key exits to the {@link StateType.MAIN_MENU} state
 	 */
-	INTRO(new int[] {Keyboard.KEY_ESCAPE}, false),
+	INTRO(new int[] {Keyboard.KEY_RETURN}, false),
 
 	/**
 	 * The main menu state. Pressing the 'escape' key quits the game.
@@ -22,11 +22,16 @@ public enum StateType {
 	MAIN_MENU(new int[] {Keyboard.KEY_ESCAPE}, true),
 
 	/**
-	 * The connection window. Mouse handling is disabled in this state, as the 'escape' key returns the user to the
-	 * main menu and the 'enter' key attempts to connect the user to the server at the entered address. All keys are
-	 * handled in this state, but only valid address characters are accepted into the text box.	 	
+	 * The connection window. Mouse handling is disabled in this state, as the
+	 * 'escape' key returns the user to the main menu and the 'enter' key attempts
+	 * to connect the user to the server at the entered address. Keyboard input is
+	 * handled for keys corresponding to valid address characters.
 	 */
-	CONNECT(new int[] {-1}, false),
+	CONNECT(new int[] {Keyboard.KEY_ESCAPE, Keyboard.KEY_RETURN, Keyboard.KEY_0,
+			Keyboard.KEY_1, Keyboard.KEY_2, Keyboard.KEY_3, Keyboard.KEY_4,
+			Keyboard.KEY_5, Keyboard.KEY_6, Keyboard.KEY_7, Keyboard.KEY_8,
+			Keyboard.KEY_9, Keyboard.KEY_PERIOD, Keyboard.KEY_SEMICOLON,
+			Keyboard.KEY_BACK}, false),
 
 	/**
 	 * The game state. This is where it all goes down.
@@ -55,5 +60,20 @@ public enum StateType {
 	StateType(int[] importantKeys, boolean registerMouseInput) {
 		this.importantKeys = importantKeys;
 		this.registerMouseInput = registerMouseInput;
+	}
+
+	public String toString() {
+		switch(this) {
+			case INTRO:
+				return "Loading Screen";
+			case MAIN_MENU:
+				return "Main Menu";
+			case CONNECT:
+				return "Connection Window";
+			case GAME:
+				return "Game";
+			default: // This code should never be reached...
+				return "";
+		}
 	}
 }

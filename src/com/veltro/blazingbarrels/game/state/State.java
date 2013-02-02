@@ -1,6 +1,7 @@
 package com.veltro.blazingbarrels.game.state;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 /**
  * States are different phases of the program (eg. the intro or the main menu). Each state has a unique {@link StateType}.
@@ -24,12 +25,6 @@ public abstract class State {
 	protected boolean keyDown;
 
 	/**
-	 * Sets the {@link ChristmasCrashers#currentState} to this state and runs the specific initialization code (such
-	 * as starting an animation or loading a world) for this state.
-	 */
-	public abstract void initialize();
-
-	/**
 	 * Constructor for the State superclass - sets the state's {@link StateType type} to the provided value.
 	 * 
 	 * @param type
@@ -39,12 +34,18 @@ public abstract class State {
 	}
 
 	/**
+	 * Sets the {@link ChristmasCrashers#currentState} to this state and runs the specific initialization code (such
+	 * as starting an animation or loading a world) for this state.
+	 */
+	public abstract void initialize();
+
+	/**
 	 * Registers and responds to keyboard and mouse input, and returns the new state determined based on input.
 	 * The majority of the logic for the state is executed in this method.
 	 * 
 	 * @return The new state that will be switched on in the next iteration of the main loop.
 	 */
-	public abstract StateType handleInput();
+	public abstract void handleInput();
 
 	/**
 	 * Renders the frame (and all graphical objects in it) for the game state.
@@ -60,7 +61,9 @@ public abstract class State {
 			for (int keyID : type.importantKeys)
 				if (Keyboard.isKeyDown(keyID))
 					return;
-		}
+			if (type.registerMouseInput && Mouse.isButtonDown(0))
+				return;
+		} 
 		keyDown = false;
 	}
 
