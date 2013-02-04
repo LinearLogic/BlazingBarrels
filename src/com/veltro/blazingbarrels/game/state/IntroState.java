@@ -20,12 +20,12 @@ public class IntroState extends State {
 	public IntroState() {
 		super(StateType.INTRO);
 		keyDown = true;
-		Music.INTRO_MUSIC.play();
 	}
 
 	@Override
 	public void initialize() {
 		keyDown = true;
+		Music.INTRO_MUSIC.play();
 	}
 
 	@Override
