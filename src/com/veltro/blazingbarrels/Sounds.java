@@ -16,6 +16,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @since 0.0.4
  */
 public enum Sounds {
+
+	// Music (these clips tend to be the long ones)
+	INTRO_MUSIC("Music\\Intro Music.wav"),
+	MAIN_MENU_MUSIC("Music\\Main Menu Music.wav"),
+	TROLOLOL_SONG_FULL("Music\\Trololol.wav"),
+
+	// Sounds
 	DEATH_SCREAM("Sounds\\Death Scream.wav"),   //a really really bad death scream
 	LAUGH("Sounds\\Laugh.wav"),
 	OVER_NINE_THOUSAND("Sounds\\Over Nine Thousand.wav"),
@@ -45,7 +52,7 @@ public enum Sounds {
 	BUTTON_OFF("Sounds\\BUTTON OFF.wav");
 
 	/**
-	 * The audio clip played by the {@link #play(short)} method.
+	 * The Sounds value's unique audio clip, played using the {@link #play(short)} method.
 	 */
 	private Clip clip;
 
