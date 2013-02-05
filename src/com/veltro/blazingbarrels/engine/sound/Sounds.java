@@ -1,4 +1,4 @@
-package com.veltro.blazingbarrels;
+package com.veltro.blazingbarrels.engine.sound;
 
 import java.io.File;
 import java.io.IOException;
