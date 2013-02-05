@@ -95,6 +95,7 @@ public class BlazingBarrels {
 		reload = false;
 		
 		setCurrentState(StateType.INTRO, true);
+		//Sounds.THAT_ESCALATED_QUICKLY.play();
 		while(running) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Reset 2D and 3D
 			long currentTime = getTime();
