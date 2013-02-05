@@ -1,11 +1,16 @@
 package com.veltro.blazingbarrels.engine.graphics_3d.model;
 
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.FloatBuffer;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.util.vector.Vector3f;
 
 /**
@@ -28,6 +33,7 @@ public class ModelBot {
 		BufferedReader reader = new BufferedReader(new FileReader(modelFile));
 		Model model = new Model();
 		String dataLine;
+
 		while ((dataLine = reader.readLine()) != null) {
 			String[] data = dataLine.split("\\s+");
 			if (data.length != 4) // Prevents ArrayIndexOutOfBoundsExceptions
@@ -45,7 +51,57 @@ public class ModelBot {
 			}
 			continue;
 		}
+
 		reader.close();
 		return model;
+	}
+
+	/**
+	 * Creates a VBO (virtual buffer object) for the provided {@link Model}, and loads it into the openGL pipe.
+	 * 
+	 * @param model The model to render as a VBO
+	 * @return An integer Array consisting of the vertex and normal VBO handles
+	 */
+	public static int[] generateVBO(Model model) {
+		int vertexHandle = glGenBuffers();
+		FloatBuffer vertices = BufferUtils.createFloatBuffer(model.getFaces().size() * 9);
+		
+		int normalHandle = glGenBuffers();
+		FloatBuffer normals = BufferUtils.createFloatBuffer(model.getFaces().size() * 9);
+		
+		for (Face face : model.getFaces()) {
+			try {
+			    vertices.put(asFloatArray(model.getVertices().get((int) face.VERTEX.x - 1)));
+			    vertices.put(asFloatArray(model.getVertices().get((int) face.VERTEX.y - 1)));
+			    vertices.put(asFloatArray(model.getVertices().get((int) face.VERTEX.z - 1)));
+			    normals.put(asFloatArray(model.getNormals().get((int) face.VERTEX.x - 1)));
+			    normals.put(asFloatArray(model.getNormals().get((int) face.VERTEX.y - 1)));
+			    normals.put(asFloatArray(model.getNormals().get((int) face.VERTEX.z - 1)));
+			} catch (IndexOutOfBoundsException e) {
+				continue;
+			}
+		}
+		vertices.flip();
+		normals.flip();
+
+		glBindBuffer(GL_ARRAY_BUFFER, vertexHandle);
+		glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
+		glVertexPointer(3, GL_FLOAT, 0, 0L);
+		glBindBuffer(GL_ARRAY_BUFFER, normalHandle);
+		glBufferData(GL_ARRAY_BUFFER, normals, GL_STATIC_DRAW);
+		glNormalPointer(GL_FLOAT, 0, 0L);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		return new int[] {vertexHandle, normalHandle};
+	}
+
+	/**
+	 * Utility method - turns a float vector into a float Array of length 3
+	 * 
+	 * @param vector
+	 * @return A float Array containing the x, y, and z components of the provided Vector3f object
+	 */
+	private static float[] asFloatArray(Vector3f vector) {
+		return new float[] {vector.x, vector.y, vector.z};
 	}
 }
