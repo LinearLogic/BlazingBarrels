@@ -3,7 +3,7 @@ package com.veltro.blazingbarrels.game.state;
 import org.lwjgl.input.Keyboard;
 
 import com.veltro.blazingbarrels.BlazingBarrels;
-import com.veltro.blazingbarrels.Music;
+import com.veltro.blazingbarrels.engine.sound.Sounds;
 
 /**
  * The IntroState is the program's loading screen, the first to be encountered
@@ -25,7 +25,7 @@ public class IntroState extends State {
 	@Override
 	public void initialize() {
 		keyDown = true;
-		Music.INTRO_MUSIC.play();
+		Sounds.INTRO_MUSIC.play((float)6);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.veltro.blazingbarrels.game.state;
 import org.lwjgl.input.Keyboard;
 
 import com.veltro.blazingbarrels.BlazingBarrels;
+import com.veltro.blazingbarrels.engine.sound.Sounds;
 
 /**
  * The MainMenuState runs a background animation while providing the user with two
@@ -20,6 +21,7 @@ public class MainMenuState extends State {
 	public MainMenuState() {
 		super(StateType.MAIN_MENU);
 		keyDown = true;
+		Sounds.MAIN_MENU_MUSIC.play(0);
 	}
 
 	@Override

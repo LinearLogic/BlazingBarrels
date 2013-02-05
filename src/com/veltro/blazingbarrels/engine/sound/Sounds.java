@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
    
@@ -17,7 +18,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public enum Sounds {
 
-	// Music (these clips tend to be the long ones)
+	// Music {LL}(these clips tend to be the long ones){D}(indeed friend)
 	INTRO_MUSIC("Music\\Intro Music.wav"),
 	MAIN_MENU_MUSIC("Music\\Main Menu Music.wav"),
 	TROLOLOL_SONG_FULL("Music\\Trololol.wav"),
@@ -52,7 +53,7 @@ public enum Sounds {
 	BUTTON_OFF("Sounds\\BUTTON OFF.wav");
 
 	/**
-	 * The Sounds value's unique audio clip, played using the {@link #play(short)} method.
+	 * The Sounds value's unique audio clip, played using the {@link #play(float)} method.
 	 */
 	private Clip clip;
 
@@ -80,15 +81,17 @@ public enum Sounds {
 	/**
 	 * Plays the audio clip from the beginning (stopping and rewinding it if necessary) at the specified volume.
 	 * 
-	 * @param volume The volume level for the clip, which must be between 1 and 100, inclusive
+	 * @param vol The volume level for the clip, a Float between -80 and 6
 	 */
-	public void play(short volume) {
-		if (volume < 1 || volume > 100)
+	//The volume parameter has to be handled as a float, otherwise, it no work senior <3 {D}
+	public void play(float vol) {
+		if (vol < -80 || vol > 6)
 			throw new IllegalArgumentException("Volume must be between 1 and 100, inclusive.");
 		if (clip.isRunning())
 			clip.stop();
 		clip.setFramePosition(0); // rewind the clip
-		// TODO: add complete volume handling
+		FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		volume.setValue(vol);
 		clip.start();
 	}
 }
