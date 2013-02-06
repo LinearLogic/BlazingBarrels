@@ -5,8 +5,8 @@ import java.util.Arrays;
 /**
  * Abstract superclass for in-game locations
  * TODO: add conversion from in-game meters (Location unit) to pixels
- * 
- * @author LinearLogic
+ * TODO: fix the "anotherLocation" bug
+ * @author LinearLogic, deager4
  * @since 0.1.1
  */
 public abstract class Location {
@@ -41,7 +41,7 @@ public abstract class Location {
 	 * @return The distance, a float value, between the two locations
 	 */
 	protected <T extends Location> float distanceTo(T anotherLocation) {
-		if (dimension != anotherLocation.dimension)
+		if (dimension != anotherLocation.dimension)  //TODO What is "anotherLocation", something is up here, it will not compile
 			throw new LocationDimensionalityMismatchException();
 		if (dimension < 1) // This should never happen...
 			return 0;
