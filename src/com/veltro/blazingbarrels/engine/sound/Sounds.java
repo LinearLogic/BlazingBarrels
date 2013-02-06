@@ -94,4 +94,3 @@ public enum Sounds {
 		clip.start();
 	}
 }
-

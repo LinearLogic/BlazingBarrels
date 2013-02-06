@@ -41,8 +41,14 @@ public abstract class Location {
 	 * @return The distance, a float value, between the two locations
 	 */
 	protected <T extends Location> float distanceTo(T anotherLocation) {
-		// TODO: populate this method
-		return 0;
+		if (dimension != anotherLocation.dimension)
+			throw new LocationDimensionalityMismatchException();
+		if (dimension < 1) // This should never happen...
+			return 0;
+		double sum = 0;
+		for (int i = 0; i < dimension; i++)
+			sum += Math.pow(anotherLocation.coordinates[i] - coordinates[i], 2);
+		return (float) Math.sqrt(sum);
 	}
 
 	/**
