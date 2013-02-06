@@ -22,12 +22,12 @@ import com.veltro.blazingbarrels.game.state.StateType;
  * and {@link #main(String[]) program launch point}.
  * 
  * @author LinearLogic
- * @version 0.1.3.1
+ * @version 0.1.4
  * @since 0.0.1
  */
 public class BlazingBarrels {
 
-	public static final String VERSION = "0.1.3.1";
+	public static final String VERSION = "0.1.4";
 	/**
 	 * If this flag is 'true', the program will log its activity to Console
 	 */
@@ -95,7 +95,6 @@ public class BlazingBarrels {
 		reload = false;
 		
 		setCurrentState(StateType.INTRO, true);
-		//Sounds.THAT_ESCALATED_QUICKLY.play();
 		while(running) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Reset 2D and 3D
 			long currentTime = getTime();

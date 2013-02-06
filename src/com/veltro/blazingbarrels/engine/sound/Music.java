@@ -11,43 +11,17 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
    
 /**
- * The Sounds enum contains various audio clips that can be played at range of volumes.
+ * The Music enum contains various audio clips that can be played at range of volumes.
  * 
  * @author deager4, LinearLogic
- * @since 0.0.4
+ * @since 0.1.4
  */
-public enum Sounds {
+public enum Music {
 
-
-
-	// Sounds
-	DEATH_SCREAM("Sounds\\Death Scream.wav"),   //a really really bad death scream
-	LAUGH("Sounds\\Laugh.wav"),
-	OVER_NINE_THOUSAND("Sounds\\Over Nine Thousand.wav"),
-	KILLING_SPREE("Sounds\\Killing Spree.wav"), // Killing Spree!!!!!!!
-	COMBO_BREAKER("Sounds\\Combo Breaker.wav"),
-	SICK_DUDE("Sounds\\Sick Dude.wav"),
-	YO_DAWG_I_HEARD_YOU_LIKE_BULLETS("Sounds\\Yo Dawg I Heard You Like Bullets.wav"),
-	WAT("Sounds\\Wat.wav"),
-	OLD_SPICE("Sounds\\Old Spice.wav"),
-	THAT_ESCALATED_QUICKLY("Sounds\\That Escalated Quickly.wav"),
-	NUKE("Sounds\\Nuke.wav"),
-	AIRSTRIKE("Sounds\\Airstrike.wav"),
-	EXPLOSIVE_BARREL("Sounds\\Explosive Barrel.wav"),
-	LASER_CANNON("Sounds\\Laser Cannon.wav"),     //Laser Cannon firing
-	RAIL_GUN("Sounds\\Rail Gun.wav"),
-	MINI_GUN("Sounds\\Mini Gun.wav"),
-	IMA_FIRIN_MY_LASER("Sounds\\Ima Firin My Laser.wav"),
-	MINI_GUN_DRY_FIRE("Sounds\\Mini Gun Dry Fire.wav"),
-	MINI_GUN_RELOAD("Sounds\\Mini Gun Reload.wav"),
-	WEAPON_OVERHEAT("Sounds\\Weapon Overheat.wav"),
-	ROCKET_LAUNCHER("Sounds\\Rocket Launcher.wav"),
-	LASER_HIT("Sounds\\Laser Hit.wav"),
-	ROCKET_HIT("Sounds\\Rocket Hit.wav"),
-	BULLET_HIT("Sounds\\Bullet Hit.wav"),
-	TROLOLOL("Sounds\\Trololol.wav"),
-	BUTTON_ON("Sounds\\BUTTON ON.wav"),
-	BUTTON_OFF("Sounds\\BUTTON OFF.wav");
+	// Music {LL}(these clips tend to be the long ones){D}(indeed friend)
+	INTRO_MUSIC("Music\\Intro Music.wav"),
+	MAIN_MENU_MUSIC("Music\\Main Menu Music.wav"),
+	TROLOLOL_SONG_FULL("Music\\Trololol.wav");
 
 	/**
 	 * The Sounds value's unique audio clip, played using the {@link #play(float)} method.
@@ -59,7 +33,7 @@ public enum Sounds {
 	 * 
 	 * @param soundFileLocation The system path to the sound file containing the audio clip
 	 */
-	Sounds(String soundFileLocation) {
+	Music(String soundFileLocation) {
 		AudioInputStream audioInputStream;
 		try {
 			audioInputStream = AudioSystem.getAudioInputStream(new File(soundFileLocation).getAbsoluteFile());
@@ -89,5 +63,6 @@ public enum Sounds {
 		FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 		volume.setValue(vol);
 		clip.start();
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 }
