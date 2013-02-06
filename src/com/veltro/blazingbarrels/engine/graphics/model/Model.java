@@ -1,4 +1,4 @@
-package com.veltro.blazingbarrels.engine.graphics_3d.model;
+package com.veltro.blazingbarrels.engine.graphics.model;
 
 import java.util.ArrayList;
 import java.util.List;

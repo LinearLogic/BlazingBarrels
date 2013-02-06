@@ -1,4 +1,4 @@
-package com.veltro.blazingbarrels.engine.graphics_3d.model;
+package com.veltro.blazingbarrels.engine.graphics.model;
 
 import org.lwjgl.util.vector.Vector3f;
 
@@ -31,5 +31,4 @@ public class Face {
 		this.VERTEX = vertex;
 		this.NORMAL = normal;
 	}
-	
 }

@@ -1,4 +1,4 @@
-package com.veltro.blazingbarrels.engine.graphics_3d.model;
+package com.veltro.blazingbarrels.engine.graphics.model;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;

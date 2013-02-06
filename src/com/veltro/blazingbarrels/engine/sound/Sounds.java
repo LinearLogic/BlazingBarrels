@@ -81,9 +81,8 @@ public enum Sounds {
 	/**
 	 * Plays the audio clip from the beginning (stopping and rewinding it if necessary) at the specified volume.
 	 * 
-	 * @param vol The volume level for the clip, a Float between -80 and 6
+	 * @param vol The volume level for the clip, a floating point value between -80 and 6
 	 */
-	//The volume parameter has to be handled as a float, otherwise, it no work senior <3 {D}
 	public void play(float vol) {
 		if (vol < -80 || vol > 6)
 			throw new IllegalArgumentException("Volume must be between 1 and 100, inclusive.");
