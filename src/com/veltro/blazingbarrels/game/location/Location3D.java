@@ -3,8 +3,9 @@ package com.veltro.blazingbarrels.game.location;
 import java.util.Arrays;
 
 /**
- * A more complex {@link Location} subclass, Location3D objects represent three-dimensional locations that facotr in
- * rotation (pitch and yaw).
+ * A more complex {@link Location} subclass, Location3D objects represent three-dimensional locations that factor in
+ * rotation (yaw, pitch, and roll). NOTE: the 'up and down' dimension is the y dimension, as is the convention for
+ * graphics design. The z axis runs into the screen, and the x axis runs across it, from left to right.
  * 
  * @author LinearLogic
  * @since 0.1.4
@@ -12,7 +13,7 @@ import java.util.Arrays;
 public class Location3D extends Location {
 
 	/**
-	 * The yaw (rotation about the z-axis), in degrees, of the location. This value is on the domain [0, 360)
+	 * The yaw (rotation about the y-axis), in degrees, of the location. This value is on the domain [0, 360)
 	 */
 	private float yaw;
 
@@ -30,9 +31,9 @@ public class Location3D extends Location {
 	 * Simple constructor - takes the x, y, and z coordinates of the location as parameters, and initializes the
 	 * rotation variables to zero, the default value
 	 * 
-	 * @param x The {@link #x x-coordinate} of the location
-	 * @param y The {@link #y y-coordinate} of the location
-	 * @param z The {@link #z z-coordinate} of the location
+	 * @param x The x-coordinate, in pixels, of the location
+	 * @param y The y-coordinate, in pixels, of the location
+	 * @param z The z-coordinate, in pixels, of the location
 	 */
 	public Location3D(float x, float y, float z) {
 		this(x, y, z, 0, 0, 0);
@@ -42,9 +43,9 @@ public class Location3D extends Location {
 	 * Complete constructor - takes the x, y, and z coordinates of the location, as well as its pitch and yaw, as
 	 * parameters.
 	 * 
-	 * @param x The {@link #x x-coordinate} of the location
-	 * @param y The {@link #y y-coordinate} of the location
-	 * @param z The {@link #z z-coordinate} of the location
+	 * @param x The x-coordinate, in pixels, of the location
+	 * @param y The y-coordinate, in pixels, of the location
+	 * @param z The z-coordinate, in pixels, of the location
 	 * @param yaw The {@link #yaw} of the location
 	 * @param pitch The {@link #pitch} of the location
 	 * @param roll The {@link #roll} of the location

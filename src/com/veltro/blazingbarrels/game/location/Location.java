@@ -1,8 +1,10 @@
 package com.veltro.blazingbarrels.game.location;
 
 /**
- * Abstract superclass for in-game locations
- * TODO: add conversion from in-game meters (Location unit) to pixels
+ * Abstract superclass for in-game locations. Location coordinates are in pixels (within the game world, not the game
+ * rendering window).
+ * 
+ * Implemented by the following classes: {@link Location2D}, {@link Location3D}
  * 
  * @author LinearLogic
  * @since 0.1.1
@@ -15,7 +17,7 @@ public abstract class Location {
 	private final int dimension;
 
 	/**
-	 * The coordinate components (eg. x,y or x,y,z) of the location. These values are in in-game meters, not pixels
+	 * The coordinate components (eg. x,y or x,y,z) of the location. These values are in pixels (within the game world)
 	 */
 	protected float[] coordinates;
 
@@ -68,7 +70,7 @@ public abstract class Location {
 	public abstract String toString();
 
 	/**
-	 * @return The {@link #coordinates} of the location (in in-game meters, not pixels)
+	 * @return The {@link #coordinates} of the location (in pixels)
 	 */
 	public float[] getCoordinates() {
 		return coordinates;

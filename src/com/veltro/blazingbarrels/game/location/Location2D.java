@@ -3,9 +3,8 @@ package com.veltro.blazingbarrels.game.location;
 import java.util.Arrays;
 
 /**
- * A two-dimensional location - much simpler than its 3-D counterpart, the 2-D location consists solely of an
- * {@link #x x-coordinate} and a {@link #y y-coordinate} (no rotation).
- * TODO: add conversion from in-game meters (Location unit) to pixels
+ * A two-dimensional location - much simpler than its 3-D counterpart, the 2-D location consists solely of x- and y-
+ * coordinates (no rotation).
  * 
  * @author LinearLogic
  * @since 0.1.3
@@ -15,8 +14,8 @@ public class Location2D extends Location {
 	/**
 	 * Constructs the two-dimensional location and the {@link Location} superclass with the provided coordinates
 	 * 
-	 * @param x The {@link #x x-coordinate} of the location
-	 * @param y The {@link #y y-coordinate} of the location
+	 * @param x The x-coordinate, in pixels, of the location
+	 * @param y The y-coordinate, in pixels, of the location
 	 */
 	public Location2D(float x, float y) {
 		super(x, y);
