@@ -28,6 +28,14 @@ public class Location3D extends Location {
 	private float roll;
 
 	/**
+	 * Simplest constructor - calls the {@link #Location3D(float, float, float, float, float, float) complete
+	 * constructor} passing 0, 0, 0, 0, 0, 0 for x, y, z, yaw, pitch, roll
+	 */
+	public Location3D() {
+		this(0, 0, 0, 0, 0, 0);
+	}
+
+	/**
 	 * Simple constructor - takes the x, y, and z coordinates of the location as parameters, and initializes the
 	 * rotation variables to zero, the default value
 	 * 

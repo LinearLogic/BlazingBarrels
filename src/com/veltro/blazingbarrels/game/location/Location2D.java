@@ -12,6 +12,13 @@ import java.util.Arrays;
 public class Location2D extends Location {
 
 	/**
+	 * Simplified constructor - calls the {@link #Location2D(float, float) complete constructor} passing 0, 0 for x, y
+	 */
+	public Location2D() {
+		this(0, 0);
+	}
+
+	/**
 	 * Constructs the two-dimensional location and the {@link Location} superclass with the provided coordinates
 	 * 
 	 * @param x The x-coordinate, in pixels, of the location
