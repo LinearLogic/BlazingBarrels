@@ -1,5 +1,7 @@
 package com.veltro.blazingbarrels.engine.graphics;
 
+import org.lwjgl.util.vector.Vector;
+
 import com.veltro.blazingbarrels.game.location.Location;
 
 /**
@@ -32,22 +34,27 @@ public interface Camera<T extends Location> {
 	void updatePosition();
 
 	/**
+	 * @return The position of the camera in terms of pixels (in the game world, not the window)
+	 */
+	<S extends Vector> S getPixelPosition();
+
+	/**
 	 * Sets the camera's position to the provided pixel coordinates (within the game world, not the game window)
 	 * 
 	 * @param coordinates An Array of floating point values (the number of values depends on the dimensionality of the
 	 * camera, which is determined by the dimensionality of the {@link Location} subclass used for the camera
 	 */
 	void setPixelPosition(float... coordinates);
-
+	
 	/**
 	 * @return The location of the camera (a {@link Location} subclass)
 	 */
-	T getPosition();
+	T getLocation();
 
 	/**
-	 * Sets the position of the camera to the provided location
+	 * Sets the location of the camera to the provided location
 	 * 
 	 * @param location A {@link Location} subclass
 	 */
-	void setPosition(T location);
+	void setLocation(T location);
 }

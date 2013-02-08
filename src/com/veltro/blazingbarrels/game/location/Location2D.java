@@ -1,5 +1,7 @@
 package com.veltro.blazingbarrels.game.location;
 
+import java.util.Arrays;
+
 /**
  * A two-dimensional location - much simpler than its 3-D counterpart, the 2-D location consists solely of an
  * {@link #x x-coordinate} and a {@link #y y-coordinate} (no rotation).
@@ -11,16 +13,6 @@ package com.veltro.blazingbarrels.game.location;
 public class Location2D extends Location {
 
 	/**
-	 * The x-coordinate (in in-game meters) of the location
-	 */
-	private float x;
-
-	/**
-	 * The y-coordinate (in in-game meters) of the location
-	 */
-	private float y;
-
-	/**
 	 * Constructs the two-dimensional location and the {@link Location} superclass with the provided coordinates
 	 * 
 	 * @param x The {@link #x x-coordinate} of the location
@@ -28,6 +20,28 @@ public class Location2D extends Location {
 	 */
 	public Location2D(float x, float y) {
 		super(x, y);
+	}
+
+	/**
+	 * Shifts the location by the specified integer amounts in each direction (casts the provided ints to floats, which
+	 * are in turn passed into the {@link #translate(float x, float y)} method)
+	 * 
+	 * @param dx x-displacement
+	 * @param dy y-displacement
+	 */
+	public void translate(int dx, int dy) {
+		translate((float) dx, (float) dy);
+	}
+
+	/**
+	 * Shifts the location by the specified floating point amounts in each direction by passing the values to the
+	 * {@link Location#translate(float...)} method in the Location superclass
+	 * 
+	 * @param dx x-displacement
+	 * @param dy y-displacement
+	 */
+	public void translate(float dx, float dy) {
+		super.translate(dx, dy);
 	}
 
 	/**
@@ -41,35 +55,40 @@ public class Location2D extends Location {
 		return super.distanceTo(anotherLocation);
 	}
 
-	/**
-	 * @return The {@link #x x-coordinate} of the location
-	 */
-	public float getX() {
-		return x;
+	@Override
+	public String toString() {
+		return "Position: " + Arrays.toString(coordinates).replace("[", "(").replace("]", ")");
 	}
 
 	/**
-	 * Sets the {@link #x x-coordinate} of the location to the specified value
+	 * @return The x-coordinate of the location (the first value in the {@link Location#coordinates} Array)
+	 */
+	public float getX() {
+		return coordinates[0];
+	}
+
+	/**
+	 * Sets the x-coordinate of the location to the specified value by editing the {@link Location#coordinates} Array
 	 * 
 	 * @param x A floating point value
 	 */
 	public void setX(float x) {
-		this.x = x;
+		coordinates[0] = x;
 	}
 
 	/**
-	 * @return The {@link #y y-coordinate} of the location
+	 * @return The y-coordinate of the location (the second value in the {@link Location#coordinates} Array)
 	 */
 	public float getY() {
-		return y;
+		return coordinates[1];
 	}
 
 	/**
-	 * Sets the {@link #y y-coordinate} of the location to the specified value
+	 * Sets the y-coordinate of the location to the specified value by editing the {@link Location#coordinates} Array
 	 * 
-	 * @param y A floating point value
+	 * @param x A floating point value
 	 */
 	public void setY(float y) {
-		this.y = y;
+		coordinates[1] = y;
 	}
 }

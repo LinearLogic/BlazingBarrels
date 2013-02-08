@@ -1,5 +1,7 @@
 package com.veltro.blazingbarrels.game.location;
 
+import java.util.Arrays;
+
 /**
  * A more complex {@link Location} subclass, Location3D objects represent three-dimensional locations that facotr in
  * rotation (pitch and yaw).
@@ -7,43 +9,33 @@ package com.veltro.blazingbarrels.game.location;
  * @author LinearLogic
  * @since 0.1.4
  */
-
 public class Location3D extends Location {
 
 	/**
-	 * The x-coordinate (in in-game meters) of the location
-	 */
-	private float x;
-
-	/**
-	 * The y-coordinate (in in-game meters) of the location
-	 */
-	private float y;
-
-	/**
-	 * The z-coordinate (in in-game meters) of the location
-	 */
-	private float z;
-
-	/**
-	 * The pitch (rotation about the y-axis), in degrees, of the location. This value is typically between -180 and 180
-	 */
-	private float pitch;
-
-	/**
-	 * The yaw (rotation about the z-axis), in degrees, of the location
+	 * The yaw (rotation about the z-axis), in degrees, of the location. This value is on the domain [0, 360)
 	 */
 	private float yaw;
 
 	/**
-	 * Simple constructor - takes the x, y, and z coordinates of the location as paramaters
+	 * The pitch (rotation about the y-axis), in degrees, of the location. This value is on the domain [0, 360)
+	 */
+	private float pitch;
+
+	/**
+	 * The roll (rotation about the x-axis), in degrees, of the location. This value is on the domain [0, 360)
+	 */
+	private float roll;
+
+	/**
+	 * Simple constructor - takes the x, y, and z coordinates of the location as parameters, and initializes the
+	 * rotation variables to zero, the default value
 	 * 
 	 * @param x The {@link #x x-coordinate} of the location
 	 * @param y The {@link #y y-coordinate} of the location
 	 * @param z The {@link #z z-coordinate} of the location
 	 */
 	public Location3D(float x, float y, float z) {
-		this(x, y, z, 0, 0);
+		this(x, y, z, 0, 0, 0);
 	}
 
 	/**
@@ -53,16 +45,63 @@ public class Location3D extends Location {
 	 * @param x The {@link #x x-coordinate} of the location
 	 * @param y The {@link #y y-coordinate} of the location
 	 * @param z The {@link #z z-coordinate} of the location
-	 * @param pitch The {@link #pitch} of the location
 	 * @param yaw The {@link #yaw} of the location
+	 * @param pitch The {@link #pitch} of the location
+	 * @param roll The {@link #roll} of the location
 	 */
-	public Location3D(float x, float y, float z, float pitch, float yaw) {
+	public Location3D(float x, float y, float z, float yaw, float pitch, float roll) {
 		super(x, y, z); 
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.roll = roll;
 		this.pitch = pitch;
 		this.yaw = yaw;
+	}
+
+	/**
+	 * Shifts the location by the specified integer amounts in each direction (casts the provided ints to floats, which
+	 * are in turn passed into the {@link #translate(float x, float y)} method)
+	 * 
+	 * @param dx x-displacement
+	 * @param dy y-displacement
+	 * @param dz z-displacement
+	 */
+	public void translate(int dx, int dy, int dz) {
+		this.translate((float) dx, (float) dy, (float) dz);
+	}
+
+	/**
+	 * Shifts the location by the specified floating point amounts in each direction by passing the values to the
+	 * {@link Location#translate(float...)} method in the Location superclass
+	 * 
+	 * @param dx x-displacement
+	 * @param dy y-displacement
+	 * @param dz z-displacement
+	 */
+	public void translate(float dx, float dy, float dz) {
+		super.translate(dx, dy, dz);
+	}
+
+	/**
+	 * Rotates the location by the provided integer amount in each rotational direction
+	 * 
+	 * @param yawAmount
+	 * @param pitchAmount
+	 * @param rollAmount
+	 */
+	public void rotate(int yawAmount, int pitchAmount, int rollAmount) {
+		this.rotate((float) yawAmount, (float) pitchAmount, (float) rollAmount);
+	}
+
+	/**
+	 * Rotates the location by the provided floating point amount in each rotational direction
+	 * 
+	 * @param yawAmount The value by which to increment the location's {@link #yaw}
+	 * @param pitchAmount The value by which to increment the location's {@link #pitch}
+	 * @param rollAmount The value by which to increment the location's {@link #roll}
+	 */
+	public void rotate(float yawAmount, float pitchAmount, float rollAmount) {
+		yaw += yawAmount;
+		pitch += pitchAmount;
+		roll += rollAmount;
 	}
 
 	/**
@@ -76,52 +115,74 @@ public class Location3D extends Location {
 		return super.distanceTo(anotherLocation);
 	}
 
-	/**
-	 * @return The {@link #x x-coordinate} of the location
-	 */
-	public float getX() {
-		return x;
+	@Override
+	public String toString() {
+		return "Position: " + Arrays.toString(coordinates).replace("[", "(").replace("]", ")") + ", yaw: " + yaw +
+				", pitch: " + pitch + ", roll: " + roll;
 	}
 
 	/**
-	 * Sets the {@link #x x-coordinate} of the location to the specified value
+	 * @return The x-coordinate of the location (the first value in the {@link Location#coordinates} Array)
+	 */
+	public float getX() {
+		return coordinates[0];
+	}
+
+	/**
+	 * Sets the x-coordinate of the location to the specified value by editing the {@link Location#coordinates} Array
 	 * 
 	 * @param x A floating point value
 	 */
 	public void setX(float x) {
-		this.x = x;
+		coordinates[0] = x;
 	}
 
 	/**
-	 * @return The {@link #y y-coordinate} of the location
+	 * @return The y-coordinate of the location (the second value in the {@link Location#coordinates} Array)
 	 */
 	public float getY() {
-		return y;
+		return coordinates[1];
 	}
 
 	/**
-	 * Sets the {@link #y y-coordinate} of the location to the specified value
+	 * Sets the y-coordinate of the location to the specified value by editing the {@link Location#coordinates} Array
 	 * 
-	 * @param y A floating point value
+	 * @param x A floating point value
 	 */
 	public void setY(float y) {
-		this.y = y;
+		coordinates[1] = y;
 	}
 
 	/**
-	 * @return The {@link #z z-coordinate} of the location
+	 * @return The z-coordinate of the location (the third value in the {@link Location#coordinates} Array)
 	 */
 	public float getZ() {
-		return z;
+		return coordinates[2];
 	}
 
 	/**
-	 * Sets the {@link #z z-coordinate} of the location to the specified value
+	 * Sets the z-coordinate of the location to the specified value by editing the {@link Location#coordinates} Array
 	 * 
 	 * @param z A floating point value
 	 */
 	public void setZ(float z) {
-		this.z = z;
+		coordinates[2] = z;
+	}
+
+	/**
+	 * @return The {@link #yaw} of the location
+	 */
+	public float getYaw() {
+		return yaw;
+	}
+	
+	/**
+	 * Sets the {@link #yaw} of the location to the specified value
+	 * 
+	 * @param yaw A floating point value
+	 */
+	public void setYaw(float yaw) {
+		this.yaw = yaw;
 	}
 
 	/**
@@ -141,18 +202,18 @@ public class Location3D extends Location {
 	}
 
 	/**
-	 * @return The {@link #yaw} of the location
+	 * @return The {@link #roll} of the location
 	 */
-	public float getYaw() {
-		return yaw;
+	public float getRoll() {
+		return roll;
 	}
-
+	
 	/**
-	 * Sets the {@link #yaw} of the location to the specified value
+	 * Sets the {@link #roll} of the location to the provided value
 	 * 
-	 * @param yaw A floating point value
+	 * @param roll A floating point value
 	 */
-	public void setYaw(float yaw) {
-		this.yaw = yaw;
+	public void setRoll(float roll) {
+		this.roll = roll;
 	}
 }

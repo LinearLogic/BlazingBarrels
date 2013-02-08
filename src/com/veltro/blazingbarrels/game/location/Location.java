@@ -1,7 +1,5 @@
 package com.veltro.blazingbarrels.game.location;
 
-import java.util.Arrays;
-
 /**
  * Abstract superclass for in-game locations
  * TODO: add conversion from in-game meters (Location unit) to pixels
@@ -19,7 +17,7 @@ public abstract class Location {
 	/**
 	 * The coordinate components (eg. x,y or x,y,z) of the location. These values are in in-game meters, not pixels
 	 */
-	private float[] coordinates;
+	protected float[] coordinates;
 
 	/**
 	 * Constructor - determines the {@link #dimension dimensionality} of the location based on the number of coordinate
@@ -30,6 +28,17 @@ public abstract class Location {
 	public Location(float... coordinates) {
 		this.coordinates = coordinates;
 		this.dimension = coordinates.length;
+	}
+
+	/**
+	 * Shifts the location by the specified floating point amounts in each direction
+	 * 
+	 * @param coordinates An series of float values
+	 */
+	public void translate(float... coordinates) {
+		int i = 0;
+		for (float element : coordinates)
+			this.coordinates[i++] += element;
 	}
 
 	/**
@@ -52,12 +61,11 @@ public abstract class Location {
 	}
 
 	/**
-	 * Method for converting the location
+	 * Method for converting the location to a readable format. 2-D locations will print the coordinates, 3-D locations
+	 * will print the coordinates and the rotation.
 	 */
 	@Override
-	public String toString() {
-		return Arrays.toString(coordinates).replace("[", "(").replace("]", ")");
-	}
+	public abstract String toString();
 
 	/**
 	 * @return The {@link #coordinates} of the location (in in-game meters, not pixels)
@@ -65,7 +73,6 @@ public abstract class Location {
 	public float[] getCoordinates() {
 		return coordinates;
 	}
-
 
 	/**
 	 * Sets the coordinates of the location to the provided float Array, provided that the two arrays' dimensions match
