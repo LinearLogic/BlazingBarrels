@@ -137,7 +137,6 @@ public class Location3D extends Location {
 	/**
 	 * @return The pixel coordinates of the location, wrapped as a Vector3f object (a 3-D vector)
 	 */
-	@SuppressWarnings("unchecked")
 	public Vector3f getCoordinatesAsVector() {
 		return new Vector3f(coordinates[0], coordinates[1], coordinates[2]);
 	}

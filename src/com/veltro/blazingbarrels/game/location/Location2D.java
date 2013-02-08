@@ -5,8 +5,8 @@ import java.util.Arrays;
 import org.lwjgl.util.vector.Vector2f;
 
 /**
- * A two-dimensional location - much simpler than its 3-D counterpart, the 2-D location consists solely of x- and y-
- * coordinates (no rotation).
+ * A {@link Location} subclass used to handle two-dimensional locations - much simpler than its 3-D counterpart, th
+ *  2-D location consists solely of x- and y-coordinates (no rotation).
  * 
  * <p>Coordinate values are in pixels
  * 

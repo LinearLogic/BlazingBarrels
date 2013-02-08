@@ -1,11 +1,10 @@
 package com.veltro.blazingbarrels.engine.graphics;
 
-import org.lwjgl.util.vector.Vector;
-
 import com.veltro.blazingbarrels.game.location.Location;
 
 /**
- * Highest-order Camera interface - specifies three basic methods for updating the camera
+ * Highest-order Camera interface - specifies basic methods for handling the camera that all implementations of this
+ * interface should use, regardless of dimensionality.
  * 
  * @author LinearLogic
  * @since 0.1.6
@@ -33,11 +32,6 @@ public interface Camera<T extends Location> {
 	 */
 	void updatePosition();
 
-	/**
-	 * @return The position of the camera in terms of pixels (in the game world, not the window)
-	 */
-	<S extends Vector> S getPixelPosition();
-	
 	/**
 	 * @return The location of the camera (a {@link Location} subclass)
 	 */
