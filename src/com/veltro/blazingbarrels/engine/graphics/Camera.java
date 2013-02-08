@@ -37,14 +37,6 @@ public interface Camera<T extends Location> {
 	 * @return The position of the camera in terms of pixels (in the game world, not the window)
 	 */
 	<S extends Vector> S getPixelPosition();
-
-	/**
-	 * Sets the camera's position to the provided pixel coordinates (within the game world, not the game window)
-	 * 
-	 * @param coordinates An Array of floating point values (the number of values depends on the dimensionality of the
-	 * camera, which is determined by the dimensionality of the {@link Location} subclass used for the camera
-	 */
-	void setPixelPosition(float... coordinates);
 	
 	/**
 	 * @return The location of the camera (a {@link Location} subclass)

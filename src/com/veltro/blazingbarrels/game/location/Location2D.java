@@ -2,9 +2,13 @@ package com.veltro.blazingbarrels.game.location;
 
 import java.util.Arrays;
 
+import org.lwjgl.util.vector.Vector2f;
+
 /**
  * A two-dimensional location - much simpler than its 3-D counterpart, the 2-D location consists solely of x- and y-
  * coordinates (no rotation).
+ * 
+ * <p>Coordinate values are in pixels
  * 
  * @author LinearLogic
  * @since 0.1.3
@@ -64,6 +68,23 @@ public class Location2D extends Location {
 	@Override
 	public String toString() {
 		return "Position: " + Arrays.toString(coordinates).replace("[", "(").replace("]", ")");
+	}
+
+	/**
+	 * @return The pixel coordinates of the location, wrapped as a Vector2f object (a 2-D vector)
+	 */
+	@SuppressWarnings("unchecked")
+	public Vector2f getCoordinatesAsVector() {
+		return new Vector2f(coordinates[0], coordinates[1]);
+	}
+
+	/**
+	 * Sets the {@link Location#coordinates} to the values specified in the provided Vector2f object (a 2-D vector)
+	 * 
+	 * @param coordinateVector A Vector3f object
+	 */
+	public void setCoordinates(Vector2f coordinateVector) {
+		setCoordinates(coordinateVector.x, coordinateVector.y);
 	}
 
 	/**

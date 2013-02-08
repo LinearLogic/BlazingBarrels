@@ -70,7 +70,7 @@ public abstract class Location {
 	public abstract String toString();
 
 	/**
-	 * @return The {@link #coordinates} of the location (in pixels)
+	 * @return The {@link #coordinates} of the location
 	 */
 	public float[] getCoordinates() {
 		return coordinates;

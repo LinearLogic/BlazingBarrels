@@ -2,10 +2,14 @@ package com.veltro.blazingbarrels.game.location;
 
 import java.util.Arrays;
 
+import org.lwjgl.util.vector.Vector3f;
+
 /**
  * A more complex {@link Location} subclass, Location3D objects represent three-dimensional locations that factor in
  * rotation (yaw, pitch, and roll). NOTE: the 'up and down' dimension is the y dimension, as is the convention for
  * graphics design. The z axis runs into the screen, and the x axis runs across it, from left to right.
+ * 
+ * <p>Coordinate values are in pixels.
  * 
  * @author LinearLogic
  * @since 0.1.4
@@ -128,6 +132,23 @@ public class Location3D extends Location {
 	public String toString() {
 		return "Position: " + Arrays.toString(coordinates).replace("[", "(").replace("]", ")") + ", yaw: " + yaw +
 				", pitch: " + pitch + ", roll: " + roll;
+	}
+
+	/**
+	 * @return The pixel coordinates of the location, wrapped as a Vector3f object (a 3-D vector)
+	 */
+	@SuppressWarnings("unchecked")
+	public Vector3f getCoordinatesAsVector() {
+		return new Vector3f(coordinates[0], coordinates[1], coordinates[2]);
+	}
+
+	/**
+	 * Sets the {@link Location#coordinates} to the values specified in the provided Vector3f object (a 3-D vector)
+	 * 
+	 * @param coordinateVector A Vector3f object
+	 */
+	public void setCoordinates(Vector3f coordinateVector) {
+		setCoordinates(coordinateVector.x, coordinateVector.y, coordinateVector.z);
 	}
 
 	/**
