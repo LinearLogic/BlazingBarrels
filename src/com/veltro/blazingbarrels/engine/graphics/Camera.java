@@ -22,9 +22,16 @@ public interface Camera<T extends Location> {
 	void handleMouseInput();
 
 	/**
-	 * Detects input from the keyboard and updates the Camera (its position, rotation, etc.) accordingly
+	 * Default version of this method - calls the {@link #handleKeyboardInput(float)} passing the default camera speed
 	 */
 	void handleKeyboardInput();
+
+	/**
+	 * Detects input from the keyboard and updates the Camera (its position, rotation, etc.) accordingly
+	 * 
+	 * @param speed The speed, in pixels per second, of the camera's movement
+	 */
+	void handleKeyboardInput(float speed);
 
 	/**
 	 * Updates the Camera's position (read: the viewing window) based on the input processed in the

@@ -1,5 +1,8 @@
 package com.veltro.blazingbarrels.engine.graphics;
 
+import org.lwjgl.input.Keyboard;
+
+import com.veltro.blazingbarrels.BlazingBarrels;
 import com.veltro.blazingbarrels.game.location.Location3D;
 
 /**
@@ -98,7 +101,32 @@ public class Camera3D implements Camera<Location3D> {
 	}
 
 	public void handleKeyboardInput() {
-		// TODO
+		this.handleKeyboardInput(200);
+	}
+	public void handleKeyboardInput(float speed) {
+		float dX = 0, dY = 0, dZ = 0; // dForward and dSideways aid in handling rotation
+		
+		// Side-to-side movement
+		if (Keyboard.isKeyDown(Keyboard.KEY_D))
+			dX += speed * BlazingBarrels.getDelta() / 1000.0;
+		if (Keyboard.isKeyDown(Keyboard.KEY_A))
+			dX -= speed * BlazingBarrels.getDelta() / 1000.0;
+		dX *= (float) Math.sin(location.getYaw() * Math.PI / 180.0); // Handle direction in which the camera is looking
+
+		// Forward/backward movement
+		if (Keyboard.isKeyDown(Keyboard.KEY_W))
+			dZ += speed * BlazingBarrels.getDelta() / 1000.0;
+		if (Keyboard.isKeyDown(Keyboard.KEY_S))
+			dZ -= speed * BlazingBarrels.getDelta() / 1000.0;
+		dZ *= (float) Math.cos(location.getYaw() * Math.PI / 180.0); // Handle direction in which the camera is looking
+
+		// Vertical movement
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+			dY += speed * BlazingBarrels.getDelta() / 1000.0;
+		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+			dY -= speed * BlazingBarrels.getDelta() / 1000.0;
+
+		location.translate(dX, dY, dZ);
 	}
 
 	public void updatePosition() {

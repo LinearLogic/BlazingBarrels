@@ -73,7 +73,6 @@ public class Location2D extends Location {
 	/**
 	 * @return The pixel coordinates of the location, wrapped as a Vector2f object (a 2-D vector)
 	 */
-	@SuppressWarnings("unchecked")
 	public Vector2f getCoordinatesAsVector() {
 		return new Vector2f(coordinates[0], coordinates[1]);
 	}
