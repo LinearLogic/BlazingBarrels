@@ -47,7 +47,7 @@ public class BlazingBarrels {
 	/**
 	 * The time, in milliseconds, between the previous frame and the current one
 	 */
-	private int delta;
+	private static int delta;
 
 	/**
 	 * The adjusted system time at which the last frame was rendered
@@ -57,12 +57,12 @@ public class BlazingBarrels {
 	/**
 	 * The width, in pixels, of the game window
 	 */
-	private int windowWidth;
+	private static int windowWidth;
 
 	/**
 	 * The height, in pixels, of the game window
 	 */
-	private int windowHeight;
+	private static int windowHeight;
 
 	/**
 	 * The {@link State game state} that the program is currently in
@@ -83,8 +83,8 @@ public class BlazingBarrels {
 	 * @param windowHeight Height, in pixels, of the game window
 	 */
 	public BlazingBarrels(int windowWidth, int windowHeight) {
-		this.windowWidth = windowWidth;
-		this.windowHeight = windowHeight;
+		BlazingBarrels.windowWidth = windowWidth;
+		BlazingBarrels.windowHeight = windowHeight;
 		if (debugModeEnabled)
 			System.out.println("Constructing the game object. Window dimensions: " + windowWidth + "x" + windowHeight + " pixels.");
 		initDisplay(windowWidth, windowHeight);
@@ -180,49 +180,49 @@ public class BlazingBarrels {
 	/**
 	 * @return The current framerate
 	 */
-	public int getCurrentFPS() {
+	public static int getCurrentFPS() {
 		return 1000/delta;
 	}
 
 	/**
 	 * @return The time {@link #delta} between the current and previous frames
 	 */
-	public int getDelta() {
+	public static int getDelta() {
 		return delta;
 	}
 
 	/**
 	 * @return The value of the {@link #windowWidth} variable
 	 */
-	public int getWindowWidth() {
+	public static int getWindowWidth() {
 		return windowWidth;
 	}
 
 	/**
 	 * @param windowWidth The value to which to set the {@link #windowWidth} variable
 	 */
-	public void setWindowWidth(int windowWidth) {
-		this.windowWidth = windowWidth;
+	public static  void setWindowWidth(int width) {
+		windowWidth = width;
 	}
 
 	/**
 	 * @return The value of the {@link #windowHeight} variable
 	 */
-	public int getWindowHeight() {
+	public static int getWindowHeight() {
 		return windowHeight;
 	}
 
 	/**
 	 * @param windowHeight The value to which to set the {@link #windowHeight} variable
 	 */
-	public void setWindowHeight(int windowHeight) {
-		this.windowHeight = windowHeight;
+	public static void setWindowHeight(int height) {
+		windowHeight = height;
 	}
 
 	/**
 	 * @return The adjusted system time
 	 */
-	public long getTime() {
+	public static long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
