@@ -34,12 +34,6 @@ public interface Camera<T extends Location> {
 	void handleKeyboardInput(float speed);
 
 	/**
-	 * Updates the Camera's position (read: the viewing window) based on the input processed in the
-	 * {@link #handleMouseInput()} and {@link #handleKeyboardInput()} methods.
-	 */
-	void updatePosition();
-
-	/**
 	 * @return The location of the camera (a {@link Location} subclass)
 	 */
 	T getLocation();

@@ -129,10 +129,6 @@ public class Camera3D implements Camera<Location3D> {
 		location.translate(dX, dY, dZ);
 	}
 
-	public void updatePosition() {
-		// TODO
-	}
-
 	/**
 	 * @return The camera's {@link #fov} angle
 	 */
