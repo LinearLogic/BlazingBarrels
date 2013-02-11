@@ -44,7 +44,8 @@ public interface Camera<T extends Location> {
 
 	/**
 	 * Updates the camera's position (read: the viewing window) and translates/rotates the gluPerspective based on the
-	 * input processed in the {@link #handleMouseInput()} and {@link #handleKeyboardInput()} methods
+	 * input processed in the {@link #handleMouseInput()} and {@link #handleKeyboardInput()} methods. Lastly, renders
+	 * the game world from the camera's perspective.
 	 */
 	void updatePosition();
 

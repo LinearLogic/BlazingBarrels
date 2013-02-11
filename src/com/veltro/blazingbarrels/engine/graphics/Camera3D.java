@@ -140,7 +140,7 @@ public class Camera3D implements Camera<Location3D> {
 	}
 
 	public void useView() {
-//		optimize();
+		optimize();
 		applyPerspectiveMatrix();
 	}
 
@@ -217,25 +217,28 @@ public class Camera3D implements Camera<Location3D> {
 	}
 
 	public void updatePosition() {
+		// Handle pitch angle
+		float pitch = location.getPitch();
+		if (pitch + dPitch > 80 && pitch + dPitch < 280) {
+			if (dPitch > 0) // Max upward angle reached; decrease dPitch so that it does not push pitch past the max
+				dPitch = (pitch < 80) ? 80 - (pitch + 1) : 80 - ((360 - pitch) + 1);
+			else // Max downward angle reached; increase dPitch (negative) so that it does not push pitch past the max
+				dPitch = (pitch > 280) ? 280 - (pitch - 1) : 280 - ((360 - pitch) - 1);
+		}
+		if (Math.abs(dPitch) < 2 /* Reduces jittery behavior when pitch is near its max */ && pitch + dPitch >= 79 &&
+				pitch + dPitch <= 281)
+			dPitch = 0;
+
+		// Update location object
 		location.rotate(dYaw, dPitch, dRoll);
 		location.translate(dx, dy, dz);
+
+		// Render the world from the camera's perspective
         glPushAttrib(GL_TRANSFORM_BIT);
         glMatrixMode(GL_MODELVIEW);
         glRotatef(location.getPitch(), -1, 0, 0);
         glRotatef(location.getYaw() - 90, 0, 1, 0);
         glRotatef(location.getRoll(), 0, 0, 1);
-        if (Keyboard.isKeyDown(Keyboard.KEY_Y)) {
-        	glTranslatef(0, -location.getY() + 20, 0);
-        	System.out.println(location.getPitch());
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-        	glTranslatef(-location.getX() + 20, 0, 0);
-        	System.out.println(location.getYaw());
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-        	glTranslatef(0, 0, -location.getZ() - 20);
-        	System.out.println(location.getYaw());
-        }
         glTranslatef(-location.getX(), -location.getY(), -location.getZ());
         glPopAttrib();
     }
