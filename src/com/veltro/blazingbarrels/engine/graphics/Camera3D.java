@@ -158,7 +158,7 @@ public class Camera3D implements Camera<Location3D> {
 	/**
 	 * @return The camera's {@link #fov} angle
 	 */
-	public float getFOV() {
+	public float getFieldOfVision() {
 		return fov;
 	}
 
@@ -167,7 +167,7 @@ public class Camera3D implements Camera<Location3D> {
 	 * 
 	 * @param fov The degrees of the angle, a floating point value
 	 */
-	public void setFOV(float fov) {
+	public void setFieldOfVision(float fov) {
 		if (fov <= 0 || fov >= 120)
 			throw new IllegalArgumentException("The field of view angle must be between 0 and 120 degrees," +
 					"non-inclusive");
@@ -194,14 +194,14 @@ public class Camera3D implements Camera<Location3D> {
 	/**
 	 * @return The camera's {@link #zNear} distance
 	 */
-	public float getZNear() {
+	public float getNearClippingPlane() {
 		return zNear;
 	}
 
 	/**
 	 * @return The camera's {@link #zFar} distance
 	 */
-	public float getZFar() {
+	public float getFarClippingPlane() {
 		return zFar;
 	}
 
