@@ -1,7 +1,12 @@
 package com.veltro.blazingbarrels.engine.graphics;
 
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.ARBDepthClamp.GL_DEPTH_CLAMP;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GLContext;
+import org.lwjgl.util.glu.GLU;
 
 import com.veltro.blazingbarrels.BlazingBarrels;
 import com.veltro.blazingbarrels.game.location.Location3D;
@@ -17,6 +22,36 @@ import com.veltro.blazingbarrels.game.location.Location3D;
  * @since 0.1.9
  */
 public class Camera3D implements Camera<Location3D> {
+
+	/**
+	 * The change in the camera's x displacement
+	 */
+	private float dx;
+
+	/**
+	 * The change in the camera's y displacement
+	 */
+	private float dy;
+
+	/**
+	 * The change in the camera's z displacement
+	 */
+	private float dz;
+
+	/**
+	 * The change in the camera's angle of yaw
+	 */
+	private float dYaw;
+
+	/**
+	 * The change in the camera's angle of pitch
+	 */
+	private float dPitch;
+
+	/**
+	 * The change in the camera's angle of roll
+	 */
+	private float dRoll;
 
 	/**
 	 * The angle of the camera's field of vision
@@ -104,8 +139,28 @@ public class Camera3D implements Camera<Location3D> {
 	}
 
 	public void useView() {
-		// TODO
+		optimize();
+		applyPerspectiveMatrix();
 	}
+
+	/**
+	 * Sets up a perspective projection matrix, renders the game from the camera's view, and reverts the matrix mode
+	 */
+	private void applyPerspectiveMatrix() {
+		glPushAttrib(GL_TRANSFORM_BIT);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        GLU.gluPerspective(fov, aspectRatio, zNear, zFar);
+        glPopAttrib();
+    }
+
+	/**
+     * Toggles GL_DEPTH_CLAMP in order to maximize rendering efficiency
+     */
+    private void optimize() {
+        if (GLContext.getCapabilities().GL_ARB_depth_clamp)
+            glEnable(GL_DEPTH_CLAMP);
+    }
 
 	public void handleMouseInput() {
 		handleMouseInput(1);
@@ -113,47 +168,55 @@ public class Camera3D implements Camera<Location3D> {
 
 	public void handleMouseInput(float speed) {
 		// Horizontal rotation:
-		location.setYaw((float) ((location.getYaw() + (Mouse.getDX() * speed)) % 360.0));
+		dYaw = ((float) Mouse.getDX()) * speed * 0.16f;
 		
 		// Vertical rotation:
-		float dy = (float) Mouse.getDY() * speed, pitch = location.getPitch();
-		if (pitch <= 85) // Maximum upwards angle
-			if ((pitch + dy) % 360 > 85)
-				pitch = 85;
-		else if (pitch >= 275) // Maximum downwards angle
-			if ((pitch + dy) % 360 < 275)
-				pitch = 275;
-		location.setPitch(pitch % 360);
+		dPitch = ((float) Mouse.getDY()) * speed * 0.16f;
 	}
 
 	public void handleKeyboardInput() {
 		this.handleKeyboardInput(200);
 	}
+
 	public void handleKeyboardInput(float speed) {
-		float dX = 0, dY = 0, dZ = 0; // dForward and dSideways aid in handling rotation
 		
 		// Side-to-side movement
 		if (Keyboard.isKeyDown(Keyboard.KEY_D))
-			dX += speed * BlazingBarrels.getDelta() / 1000.0;
+			dx += speed * BlazingBarrels.getDelta() / 1000.0;
 		if (Keyboard.isKeyDown(Keyboard.KEY_A))
-			dX -= speed * BlazingBarrels.getDelta() / 1000.0;
-		dX *= (float) Math.sin(location.getYaw() * Math.PI / 180.0); // Handle direction in which the camera is looking
+			dx -= speed * BlazingBarrels.getDelta() / 1000.0;
+		dx *= (float) Math.sin(location.getYaw() * Math.PI / 180.0); // Handle direction in which the camera is looking
 
 		// Forward/backward movement
 		if (Keyboard.isKeyDown(Keyboard.KEY_W))
-			dZ += speed * BlazingBarrels.getDelta() / 1000.0;
+			dz += speed * BlazingBarrels.getDelta() / 1000.0;
 		if (Keyboard.isKeyDown(Keyboard.KEY_S))
-			dZ -= speed * BlazingBarrels.getDelta() / 1000.0;
-		dZ *= (float) Math.cos(location.getYaw() * Math.PI / 180.0); // Handle direction in which the camera is looking
+			dz -= speed * BlazingBarrels.getDelta() / 1000.0;
+		dz *= (float) Math.cos(location.getYaw() * Math.PI / 180.0); // Handle direction in which the camera is looking
 
 		// Vertical movement (not affected by the rotation of the camera's viewing window)
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
-			dY += speed * BlazingBarrels.getDelta() / 1000.0;
+			dy += speed * BlazingBarrels.getDelta() / 1000.0;
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
-			dY -= speed * BlazingBarrels.getDelta() / 1000.0;
-
-		location.translate(dX, dY, dZ);
+			dy -= speed * BlazingBarrels.getDelta() / 1000.0;
 	}
+
+	public void updatePosition() {
+		float pitch = location.getPitch();
+		if (pitch + dPitch <= 85) // Maximum upwards angle
+			if ((pitch + dPitch) % 360 > 85)
+				dPitch = 0;
+		else if (pitch + dPitch >= 275) // Maximum downwards angle
+			if ((pitch + dPitch) % 360 < 275)
+				dPitch = 0;
+        glPushAttrib(GL_TRANSFORM_BIT);
+        glMatrixMode(GL_MODELVIEW);
+        glRotatef(dPitch, 1, 0, 0);
+        glRotatef(dYaw, 0, 1, 0);
+        glRotatef(dRoll, 0, 0, 1);
+        glTranslatef(-dx, -dy, -dz);
+        glPopAttrib();
+    }
 
 	/**
 	 * @return The camera's {@link #fov} angle
