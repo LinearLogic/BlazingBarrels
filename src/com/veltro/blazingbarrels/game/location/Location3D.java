@@ -113,8 +113,14 @@ public class Location3D extends Location {
 	 */
 	public void rotate(float yawAmount, float pitchAmount, float rollAmount) {
 		yaw = (yaw + yawAmount) % 360;
+		if (yaw < 0)
+			yaw = 360 + yaw;
 		pitch = (pitch + pitchAmount) % 360;
+		if (pitch < 0)
+			pitch = 360 + pitch;
 		roll = (roll + rollAmount) % 360;
+		if (roll < 0)
+			roll = 360 + roll;
 	}
 
 	/**
