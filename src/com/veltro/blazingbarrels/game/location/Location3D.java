@@ -22,12 +22,12 @@ public class Location3D extends Location {
 	private float yaw;
 
 	/**
-	 * The pitch (rotation about the y-axis), in degrees, of the location. This value is on the domain [0, 360)
+	 * The pitch (rotation about the x-axis), in degrees, of the location. This value is on the domain [0, 360)
 	 */
 	private float pitch;
 
 	/**
-	 * The roll (rotation about the x-axis), in degrees, of the location. This value is on the domain [0, 360)
+	 * The roll (rotation about the z-axis), in degrees, of the location. This value is on the domain [0, 360)
 	 */
 	private float roll;
 
