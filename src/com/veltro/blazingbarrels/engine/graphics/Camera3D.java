@@ -197,6 +197,12 @@ public class Camera3D implements Camera<Location3D> {
 		if (Keyboard.isKeyDown(Keyboard.KEY_A))
 			dSideways -= speed * VBOModels.getDelta() / 1000.0;
 
+		// Apply speed cap if necessary
+		if (dForward != 0 && dSideways != 0) {
+			dForward /= Math.sqrt(2);
+			dSideways /= Math.sqrt(2);
+		}
+
 		 // Handle direction in which the camera is looking
 		dx -= dForward * (float) Math.cos(location.getYaw() * Math.PI / 180.0);
 		dz -= dForward * (float) Math.sin(location.getYaw() * Math.PI / 180.0);
@@ -218,6 +224,18 @@ public class Camera3D implements Camera<Location3D> {
         glRotatef(location.getPitch(), -1, 0, 0);
         glRotatef(location.getYaw() - 90, 0, 1, 0);
         glRotatef(location.getRoll(), 0, 0, 1);
+        if (Keyboard.isKeyDown(Keyboard.KEY_Y)) {
+        	glTranslatef(0, -location.getY() + 20, 0);
+        	System.out.println(location.getPitch());
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+        	glTranslatef(-location.getX() + 20, 0, 0);
+        	System.out.println(location.getYaw());
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
+        	glTranslatef(0, 0, -location.getZ() - 20);
+        	System.out.println(location.getYaw());
+        }
         glTranslatef(-location.getX(), -location.getY(), -location.getZ());
         glPopAttrib();
     }
