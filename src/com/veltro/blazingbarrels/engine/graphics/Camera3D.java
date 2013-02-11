@@ -86,6 +86,16 @@ public class Camera3D implements Camera<Location3D> {
 	 * @param location The 3-D pixel {@link #location} of the camera
 	 */
 	public Camera3D(float fov, float aspectRatio, float zNear, float zFar, Location3D location) {
+		if (fov <= 0 || fov >= 120 /* TODO: determine a reasonable fov cap, if this one is not reasonable */)
+			throw new IllegalArgumentException("The field of view angle must be between 0 and 120 degrees," +
+					"non-inclusive");
+		if (aspectRatio <= 0)
+			throw new IllegalArgumentException("The aspect ratio value must be greater than zero");
+		if (zNear <= 0)
+			throw new IllegalArgumentException("The near clipping plane displacement must be greater than zero");
+		if (zFar <= zNear)
+			throw new IllegalArgumentException("The far clipping plane must be farther from the camera than the near" +
+					"clipping plane");
 		this.fov = fov;
 		this.aspectRatio = aspectRatio;
 		this.zNear = zNear;
@@ -158,6 +168,9 @@ public class Camera3D implements Camera<Location3D> {
 	 * @param fov The degrees of the angle, a floating point value
 	 */
 	public void setFOV(float fov) {
+		if (fov <= 0 || fov >= 120)
+			throw new IllegalArgumentException("The field of view angle must be between 0 and 120 degrees," +
+					"non-inclusive");
 		this.fov = fov;
 	}
 
@@ -174,6 +187,8 @@ public class Camera3D implements Camera<Location3D> {
 	 * @param aspectRatio The aspect ratio fraction as a floating point value
 	 */
 	public void setAspectRatio(float aspectRatio) {
+		if (aspectRatio <= 0)
+			throw new IllegalArgumentException("The aspect ratio value must be greater than zero");
 		this.aspectRatio = aspectRatio;
 	}
 	/**
