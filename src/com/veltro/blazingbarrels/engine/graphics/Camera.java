@@ -17,12 +17,21 @@ public interface Camera<T extends Location> {
 	void useView();
 
 	/**
-	 * Detects input from the mouse and updates the Camera (its position, rotation, etc.) accordingly
+	 * Default version of this method - calls the {@link #handleMouseInput(float)} method, passing the default
+	 * rotational speed multiplier for the camera
 	 */
 	void handleMouseInput();
 
 	/**
-	 * Default version of this method - calls the {@link #handleKeyboardInput(float)} passing the default camera speed
+	 * Detects input from the mouse and updates the Camera (its position, rotation, etc.) accordingly
+	 * 
+	 * @param speed The factor by which to scale the mouse speed, which is used to determine rotational speed
+	 */
+	void handleMouseInput(float speedMultiplier);
+
+	/**
+	 * Default version of this method - calls the {@link #handleKeyboardInput(float)} method, passing the default
+	 * translational speed for the camera
 	 */
 	void handleKeyboardInput();
 

@@ -1,6 +1,7 @@
 package com.veltro.blazingbarrels.engine.graphics;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import com.veltro.blazingbarrels.BlazingBarrels;
 import com.veltro.blazingbarrels.game.location.Location3D;
@@ -97,7 +98,22 @@ public class Camera3D implements Camera<Location3D> {
 	}
 
 	public void handleMouseInput() {
-		// TODO
+		handleMouseInput(1);
+	}
+
+	public void handleMouseInput(float speed) {
+		// Horizontal rotation:
+		location.setYaw((float) ((location.getYaw() + (Mouse.getDX() * speed)) % 360.0));
+		
+		// Vertical rotation:
+		float dy = (float) Mouse.getDY() * speed, pitch = location.getPitch();
+		if (pitch <= 85) // Maximum upwards angle
+			if ((pitch + dy) % 360 > 85)
+				pitch = 85;
+		else if (pitch >= 275) // Maximum downwards angle
+			if ((pitch + dy) % 360 < 275)
+				pitch = 275;
+		location.setPitch(pitch % 360);
 	}
 
 	public void handleKeyboardInput() {
@@ -120,7 +136,7 @@ public class Camera3D implements Camera<Location3D> {
 			dZ -= speed * BlazingBarrels.getDelta() / 1000.0;
 		dZ *= (float) Math.cos(location.getYaw() * Math.PI / 180.0); // Handle direction in which the camera is looking
 
-		// Vertical movement
+		// Vertical movement (not affected by the rotation of the camera's viewing window)
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
 			dY += speed * BlazingBarrels.getDelta() / 1000.0;
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
