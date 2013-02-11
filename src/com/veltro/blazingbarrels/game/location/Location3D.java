@@ -112,9 +112,9 @@ public class Location3D extends Location {
 	 * @param rollAmount The value by which to increment the location's {@link #roll}
 	 */
 	public void rotate(float yawAmount, float pitchAmount, float rollAmount) {
-		yaw += yawAmount;
-		pitch += pitchAmount;
-		roll += rollAmount;
+		yaw = (yaw + yawAmount) % 360;
+		pitch = (pitch + pitchAmount) % 360;
+		roll = (roll + rollAmount) % 360;
 	}
 
 	/**
