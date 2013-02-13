@@ -62,7 +62,7 @@ public class ModelBot {
 	 * @param model The model to render as a VBO
 	 * @return An integer Array consisting of the vertex and normal VBO handles
 	 */
-	public static int[] generateVBO(Model model) {
+	public static void generateVBO(Model model) {
 		int vertexHandle = glGenBuffers();
 		FloatBuffer vertices = BufferUtils.createFloatBuffer(model.getFaces().size() * 9);
 		
@@ -92,7 +92,8 @@ public class ModelBot {
 		glNormalPointer(GL_FLOAT, 0, 0L);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		return new int[] {vertexHandle, normalHandle};
+		model.setVBOVertexHandle(vertexHandle);
+		model.setVBONormalHandle(normalHandle);
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package com.veltro.blazingbarrels.engine.graphics.model;
 
+import static org.lwjgl.opengl.GL15.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,16 @@ import org.lwjgl.util.vector.Vector3f;
  * @since 0.0.5
  */
 public class Model {
+
+	/**
+	 * The integer ID for the model's openGL vertex handle, used to render the model as a Virtual Buffer Object
+	 */
+	private int vboVertexHandle;
+
+	/**
+	 * The integer ID for the model's openGL normal handle, used to render the model as a Virtual Buffer Object
+	 */
+	private int vboNormalHandle;
 
 	/**
 	 * The 3-D coordinates of the vertices corresponding to each face of the model
@@ -36,6 +48,11 @@ public class Model {
 		vertices = new ArrayList<Vector3f>();
 		normals = new ArrayList<Vector3f>();
 		faces = new ArrayList<Face>();
+	}
+
+	public void deleteBuffers() {
+		glDeleteBuffers(vboVertexHandle);
+		glDeleteBuffers(vboNormalHandle);
 	}
 
 	/**
@@ -84,5 +101,37 @@ public class Model {
 	 */
 	public void addFace(Face face) {
 		faces.add(face);
+	}
+
+	/**
+	 * @return The model's {@link #vboVertexHandle} value
+	 */
+	public int getVBOVertexHandle() {
+		return vboVertexHandle;
+	}
+
+	/**
+	 * Sets the model's {@link #vboVertexHandle} to the specified integer value
+	 * 
+	 * @param handle
+	 */
+	public void setVBOVertexHandle(int handle) {
+		this.vboVertexHandle = handle;
+	}
+
+	/**
+	 * @return The model's {@link #vboNormalHandle} value
+	 */
+	public int getVBONormalHandle() {
+		return vboNormalHandle;
+	}
+
+	/**
+	 * Sets the model's {@link #vboNormalHandle} to the specified integer value
+	 * 
+	 * @param handle
+	 */
+	public void setVBONormalHandle(int handle) {
+		this.vboNormalHandle = handle;
 	}
 }

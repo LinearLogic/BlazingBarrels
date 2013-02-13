@@ -1,5 +1,7 @@
 package com.veltro.blazingbarrels.game.state;
 
+import com.veltro.blazingbarrels.engine.graphics.Camera3D;
+
 /**
  * The GameState contains all of the input handling and logic for the game itself,
  * a 3-D, multiplayer first person shooter.
@@ -8,6 +10,11 @@ package com.veltro.blazingbarrels.game.state;
  * @since 0.0.3
  */
 public class GameState extends State {
+
+	/**
+	 * The {@link Camera3D camera} used to view the game world
+	 */
+	private Camera3D camera;
 
 	/**
 	 * Constructor - calls the {@link State} superclass constructor with the {@link StateType#GAME} type.
@@ -19,6 +26,8 @@ public class GameState extends State {
 
 	@Override
 	public void initialize() {
+		camera = new Camera3D();
+		camera.useView();
 		keyDown = true;
 	}
 
@@ -36,12 +45,13 @@ public class GameState extends State {
 //				return;
 //			}
 //		}
+		camera.handleMouseInput();
+		camera.handleKeyboardInput();
 	}
 
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
-
+		camera.updatePosition();
+		camera.draw();
 	}
-
 }

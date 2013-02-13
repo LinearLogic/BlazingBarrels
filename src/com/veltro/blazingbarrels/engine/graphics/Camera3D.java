@@ -9,7 +9,6 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
 
 import com.veltro.blazingbarrels.BlazingBarrels;
-import com.veltro.blazingbarrels.VBOModels;
 import com.veltro.blazingbarrels.game.location.Location3D;
 
 /**
@@ -85,7 +84,7 @@ public class Camera3D implements Camera<Location3D> {
 	 * {@link #Camera3D(float, float, float, float, Location3D) complete constructor}
 	 */
 	public Camera3D() {
-		this(90, 1, 0.3f, 200, new Location3D());
+		this(90, BlazingBarrels.getWindowWidth() / BlazingBarrels.getWindowHeight(), 0.3f, 200, new Location3D());
 	}
 
 	/**
@@ -96,7 +95,7 @@ public class Camera3D implements Camera<Location3D> {
 	 * @param zFar The distance of the far clipping plane
 	 */
 	public Camera3D(float zNear, float zFar) {
-		this(90, 1, zNear, zFar, new Location3D());
+		this(80, 1, zNear, zFar, new Location3D());
 	}
 
 	/**
@@ -187,15 +186,15 @@ public class Camera3D implements Camera<Location3D> {
 
 		// Forward/backward movement
 		if (Keyboard.isKeyDown(Keyboard.KEY_W))
-			dForward += speed * VBOModels.getDelta() / 1000.0;
+			dForward += speed * BlazingBarrels.getDelta() / 1000.0;
 		if (Keyboard.isKeyDown(Keyboard.KEY_S))
-			dForward -= speed * VBOModels.getDelta() / 1000.0;
+			dForward -= speed * BlazingBarrels.getDelta() / 1000.0;
 
 		// Side-to-side movement
 		if (Keyboard.isKeyDown(Keyboard.KEY_D))
-			dSideways += speed * VBOModels.getDelta() / 1000.0;
+			dSideways += speed * BlazingBarrels.getDelta() / 1000.0;
 		if (Keyboard.isKeyDown(Keyboard.KEY_A))
-			dSideways -= speed * VBOModels.getDelta() / 1000.0;
+			dSideways -= speed * BlazingBarrels.getDelta() / 1000.0;
 
 		// Apply speed cap if necessary
 		if (dForward != 0 && dSideways != 0) {
@@ -211,9 +210,9 @@ public class Camera3D implements Camera<Location3D> {
 
 		// Vertical movement (not affected by the rotation of the camera's viewing window)
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
-			dy += speed * VBOModels.getDelta() / 1000.0;
+			dy += speed * BlazingBarrels.getDelta() / 1000.0;
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
-			dy -= speed * VBOModels.getDelta() / 1000.0;
+			dy -= speed * BlazingBarrels.getDelta() / 1000.0;
 	}
 
 	public void updatePosition() {
@@ -232,7 +231,9 @@ public class Camera3D implements Camera<Location3D> {
 		// Update location object
 		location.rotate(dYaw, dPitch, dRoll);
 		location.translate(dx, dy, dz);
+	}
 
+	public void draw() {
 		// Render the world from the camera's perspective
         glPushAttrib(GL_TRANSFORM_BIT);
         glMatrixMode(GL_MODELVIEW);

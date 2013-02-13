@@ -43,11 +43,16 @@ public interface Camera<T extends Location> {
 	void handleKeyboardInput(float speed);
 
 	/**
-	 * Updates the camera's position (read: the viewing window) and translates/rotates the gluPerspective based on the
-	 * input processed in the {@link #handleMouseInput()} and {@link #handleKeyboardInput()} methods. Lastly, renders
-	 * the game world from the camera's perspective.
+	 * Updates the camera's location (read: position of the viewing window) based on the input processed in the
+	 * {@link #handleMouseInput()} and {@link #handleKeyboardInput()} methods
 	 */
 	void updatePosition();
+
+	/**
+	 * Renders the game world from the camera's perspective, translating/rotating the gluPerspective based on the
+	 * the camera's location (updated by the {@link #updatePosition()} method)
+	 */
+	void draw();
 
 	/**
 	 * @return The location of the camera (a {@link Location} subclass)
