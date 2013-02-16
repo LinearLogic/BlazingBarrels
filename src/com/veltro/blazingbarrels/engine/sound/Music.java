@@ -7,6 +7,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.FloatControl.Type;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
    
@@ -19,9 +20,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public enum Music {
 
 	// Music {LL}(these clips tend to be the long ones){D}(indeed friend)
-	INTRO_MUSIC("Music\\Intro Music.wav"),
-	MAIN_MENU_MUSIC("Music\\Main Menu Music.wav"),
-	TROLOLOL_SONG_FULL("Music\\Trololol.wav");
+	INTRO_MUSIC("Music" + File.separator + "Intro Music.wav"),
+	MAIN_MENU_MUSIC("Music" + File.separator + "Main Menu Music.wav"),
+	TROLOLOL_SONG_FULL("Music" + File.separator + "Trololol.wav");
 
 	/**
 	 * The Sounds value's unique audio clip, played using the {@link #play(float)} method.
@@ -37,8 +38,7 @@ public enum Music {
 		AudioInputStream audioInputStream;
 		try {
 			audioInputStream = AudioSystem.getAudioInputStream(new File(soundFileLocation).getAbsoluteFile());
-			clip = AudioSystem.getClip();
-			clip.open(audioInputStream);
+			AudioSystem.getClip().open(audioInputStream);
 		} catch (UnsupportedAudioFileException e) {
 			e = new UnsupportedAudioFileException("The provided file is not an audio file: " + soundFileLocation);
 			e.printStackTrace();

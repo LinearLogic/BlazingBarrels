@@ -21,33 +21,33 @@ public enum Sounds {
 
 
 	// Sounds
-	DEATH_SCREAM("Sounds\\Death Scream.wav"),   //a really really bad death scream
-	LAUGH("Sounds\\Laugh.wav"),
-	OVER_NINE_THOUSAND("Sounds\\Over Nine Thousand.wav"),
-	KILLING_SPREE("Sounds\\Killing Spree.wav"), // Killing Spree!!!!!!!
-	COMBO_BREAKER("Sounds\\Combo Breaker.wav"),
-	SICK_DUDE("Sounds\\Sick Dude.wav"),
-	YO_DAWG_I_HEARD_YOU_LIKE_BULLETS("Sounds\\Yo Dawg I Heard You Like Bullets.wav"),
-	WAT("Sounds\\Wat.wav"),
-	OLD_SPICE("Sounds\\Old Spice.wav"),
-	THAT_ESCALATED_QUICKLY("Sounds\\That Escalated Quickly.wav"),
-	NUKE("Sounds\\Nuke.wav"),
-	AIRSTRIKE("Sounds\\Airstrike.wav"),
-	EXPLOSIVE_BARREL("Sounds\\Explosive Barrel.wav"),
-	LASER_CANNON("Sounds\\Laser Cannon.wav"),     //Laser Cannon firing
-	RAIL_GUN("Sounds\\Rail Gun.wav"),
-	MINI_GUN("Sounds\\Mini Gun.wav"),
-	IMA_FIRIN_MY_LASER("Sounds\\Ima Firin My Laser.wav"),
-	MINI_GUN_DRY_FIRE("Sounds\\Mini Gun Dry Fire.wav"),
-	MINI_GUN_RELOAD("Sounds\\Mini Gun Reload.wav"),
-	WEAPON_OVERHEAT("Sounds\\Weapon Overheat.wav"),
-	ROCKET_LAUNCHER("Sounds\\Rocket Launcher.wav"),
-	LASER_HIT("Sounds\\Laser Hit.wav"),
-	ROCKET_HIT("Sounds\\Rocket Hit.wav"),
-	BULLET_HIT("Sounds\\Bullet Hit.wav"),
-	TROLOLOL("Sounds\\Trololol.wav"),
-	BUTTON_ON("Sounds\\BUTTON ON.wav"),
-	BUTTON_OFF("Sounds\\BUTTON OFF.wav");
+	DEATH_SCREAM("Sounds" + File.separator + "Death Scream.wav"),   //a really really bad death scream
+	LAUGH("Sounds" + File.separator + "Laugh.wav"),
+	OVER_NINE_THOUSAND("Sounds" + File.separator + "Over Nine Thousand.wav"),
+	KILLING_SPREE("Sounds" + File.separator + "Killing Spree.wav"), // Killing Spree!!!!!!!
+	COMBO_BREAKER("Sounds" + File.separator + "Combo Breaker.wav"),
+	SICK_DUDE("Sounds" + File.separator + "Sick Dude.wav"),
+	YO_DAWG_I_HEARD_YOU_LIKE_BULLETS("Sounds" + File.separator + "Yo Dawg I Heard You Like Bullets.wav"),
+	WAT("Sounds" + File.separator + "Wat.wav"),
+	OLD_SPICE("Sounds" + File.separator + "Old Spice.wav"),
+	THAT_ESCALATED_QUICKLY("Sounds" + File.separator + "That Escalated Quickly.wav"),
+	NUKE("Sounds" + File.separator + "Nuke.wav"),
+	AIRSTRIKE("Sounds" + File.separator + "Airstrike.wav"),
+	EXPLOSIVE_BARREL("Sounds" + File.separator + "Explosive Barrel.wav"),
+	LASER_CANNON("Sounds" + File.separator + "Laser Cannon.wav"),     //Laser Cannon firing
+	RAIL_GUN("Sounds" + File.separator + "Rail Gun.wav"),
+	MINI_GUN("Sounds" + File.separator + "Mini Gun.wav"),
+	IMA_FIRIN_MY_LASER("Sounds" + File.separator + "Ima Firin My Laser.wav"),
+	MINI_GUN_DRY_FIRE("Sounds" + File.separator + "Mini Gun Dry Fire.wav"),
+	MINI_GUN_RELOAD("Sounds" + File.separator + "Mini Gun Reload.wav"),
+	WEAPON_OVERHEAT("Sounds" + File.separator + "Weapon Overheat.wav"),
+	ROCKET_LAUNCHER("Sounds" + File.separator + "Rocket Launcher.wav"),
+	LASER_HIT("Sounds" + File.separator + "Laser Hit.wav"),
+	ROCKET_HIT("Sounds" + File.separator + "Rocket Hit.wav"),
+	BULLET_HIT("Sounds" + File.separator + "Bullet Hit.wav"),
+	TROLOLOL("Sounds" + File.separator + "Trololol.wav"),
+	BUTTON_ON("Sounds" + File.separator + "BUTTON ON.wav"),
+	BUTTON_OFF("Sounds" + File.separator + "BUTTON OFF.wav");
 
 	/**
 	 * The Sounds value's unique audio clip, played using the {@link #play(float)} method.
