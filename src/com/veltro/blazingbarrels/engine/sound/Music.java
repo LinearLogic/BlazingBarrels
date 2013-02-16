@@ -44,7 +44,8 @@ public enum Music {
 		AudioInputStream audioInputStream;
 		try {
 			audioInputStream = AudioSystem.getAudioInputStream(new File(soundFileLocation).getAbsoluteFile());
-			AudioSystem.getClip().open(audioInputStream);
+			clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
 		} catch (UnsupportedAudioFileException e) {
 			e = new UnsupportedAudioFileException("The provided file is not an audio file: " + soundFileLocation);
 			e.printStackTrace();
@@ -62,9 +63,13 @@ public enum Music {
 	 */
 	public void play(float vol) {
 		if (vol < -80 || vol > 6)
+		{
 			throw new IllegalArgumentException("Volume must be between 1 and 100, inclusive.");
+		}
 		if (clip.isRunning())
+		{
 			clip.stop();
+		}
 		clip.setFramePosition(0); // rewind the clip
 		FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 		volume.setValue(vol);
