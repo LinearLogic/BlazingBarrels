@@ -2,6 +2,7 @@ package com.veltro.blazingbarrels.engine.sound;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -55,6 +56,11 @@ public enum Sounds {
 	private Clip clip;
 
 	/**
+	 * A list of all currently playing clips
+	 */
+	private static ArrayList<Clip> playingClips = new ArrayList<Clip>();
+
+ 	/**
 	 * Constructor - initializes each enum value, loading its clip from the sound file at the provided location.
 	 * 
 	 * @param soundFileLocation The system path to the sound file containing the audio clip
@@ -89,5 +95,17 @@ public enum Sounds {
 		FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 		volume.setValue(vol);
 		clip.start();
+		playingClips.add(clip);
+	}
+	
+	/**
+	 * Stops all currently playing sounds
+	 */
+	public static void stopAll()
+	{
+		for(int count = 0; count < playingClips.size(); count ++)
+		{
+			playingClips.get(count).stop();
+		}
 	}
 }
