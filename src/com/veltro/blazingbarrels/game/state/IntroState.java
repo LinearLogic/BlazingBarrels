@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.veltro.blazingbarrels.BlazingBarrels;
 import com.veltro.blazingbarrels.engine.sound.Music;
+import com.veltro.blazingbarrels.engine.sound.Sounds;
 
 /**
  * The IntroState is the program's loading screen, the first to be encountered
@@ -25,7 +26,7 @@ public class IntroState extends State {
 	@Override
 	public void initialize() {
 		keyDown = true;
-		Music.INTRO_MUSIC.play((float)0);
+		Sounds.AIRSTRIKE.play((float)6);
 //		ATTN: All music and sounds are disabled until the sound bug due to improper audio calls is resolved
 	}
 
