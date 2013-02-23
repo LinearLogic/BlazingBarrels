@@ -74,6 +74,15 @@ public class Weapon
 	}
 	
 	/**
+	 * 
+	 * @return the weapon type of the weapon
+	 */
+	public Weapons getWeaponType()
+	{
+		return this.weaponType;
+	}
+	
+	/**
 	 * reloads the weapon to its maximum ammo capacity
 	 */
 	public void reload()
@@ -93,6 +102,15 @@ public class Weapon
 		{
 			isOverheated = false;
 		}
+	}
+	
+	/**
+	 * 
+	 * @return the ammount of ammo currently in the weapon
+	 */
+	public int getCurrentAmmo()
+	{
+		return this.currentAmmo;
 	}
 	
 	/**
