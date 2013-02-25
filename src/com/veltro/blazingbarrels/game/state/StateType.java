@@ -22,10 +22,8 @@ public enum StateType {
 	MAIN_MENU(new int[] {Keyboard.KEY_ESCAPE}, true),
 
 	/**
-	 * The connection window. Mouse handling is disabled in this state, as the
-	 * 'escape' key returns the user to the main menu and the 'enter' key attempts
-	 * to connect the user to the server at the entered address. Keyboard input is
-	 * handled for keys corresponding to valid address characters.
+	 * The connection window. All keys are available in this state, and the mouse is handled, as it is used to click
+	 * the 'connect' and 'cancel' navigation buttons at the bottom of the window.
 	 */
 	CONNECT(new int[] {Keyboard.KEY_ESCAPE, Keyboard.KEY_RETURN, Keyboard.KEY_0,
 			Keyboard.KEY_1, Keyboard.KEY_2, Keyboard.KEY_3, Keyboard.KEY_4,
