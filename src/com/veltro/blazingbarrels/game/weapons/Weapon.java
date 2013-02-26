@@ -114,6 +114,15 @@ public class Weapon
 	}
 	
 	/**
+	 * 
+	 * @return {@link Weapon heatLevel}
+	 */
+	public double getWeaponOverheatLevel()
+	{
+		return this.heatLevel;
+	}
+	
+	/**
 	 * Calculates damage from a weapon at a certain distance from the center of the blast, takes into account coer
 	 * @param distanceFromBlast the distance from the blast, in meters, that the player is at
 	 * @param behindCover Is the player behind cover?

@@ -7,6 +7,11 @@ import com.veltro.blazingbarrels.game.weapons.Weapon;
 public class Player 
 {
 	/**
+	 * The weapon that the player has when they next respawn
+	 */
+	private Weapon futureWeapon;
+	
+	/**
 	 * the current state of the player 
 	 */
 	private PlayerState playerState;
@@ -19,7 +24,7 @@ public class Player
 	/**
 	 * the location of the player
 	 */
-	private float[] playerLocation;
+	private Location3D playerLocation;
 	
 	/**
 	 * the weapon the player is currently using
@@ -80,11 +85,23 @@ public class Player
 	
 	/**
 	 * smites the player, removing all of their life, and setting them to DEAD
+	 * Also displays a message when they die
+	 */
+	public void kill(String deadMessage)
+	{
+		this.playerHealth = 0;
+		playerState = PlayerState.DEAD;
+		this.setCurrentWeapon(futureWeapon);
+	}
+	
+	/**
+	 * kills a player, removing all life, and sets them to dead
 	 */
 	public void kill()
 	{
 		this.playerHealth = 0;
 		playerState = PlayerState.DEAD;
+		this.setCurrentWeapon(futureWeapon);
 	}
 	
 	/**
@@ -100,9 +117,14 @@ public class Player
 	 * 
 	 * @param weapon the new weapon type of the player
 	 */
-	public void setCurentWeapon(Weapon weapon)
+	public void setCurrentWeapon(Weapon weapon)
 	{
 		this.currentWeapon = weapon;
+	}
+	
+	public void setFutureWeapon(Weapon weapon)
+	{
+		this.futureWeapon = weapon;
 	}
 	
 	public int getPlayerHealth()
@@ -122,12 +144,16 @@ public class Player
 		}
 	}
 	
+	/**
+	 * 
+	 * @param damageAmmount the ammount of damage you wish to deal to a player
+	 */
 	public void damagePlayer(int damageAmmount)
 	{
 		if(this.playerHealth - damageAmmount <= 0)
 		{
 			this.playerHealth = 0;
-			this.playerState = PlayerState.DEAD;
+			this.kill();
 		}
 		else
 		{

@@ -52,7 +52,7 @@ public abstract class Location {
 	 * @return The distance, a float value, between the two locations
 	 */
 	protected <T extends Location> float distanceTo(T anotherLocation) {
-		if (dimension != anotherLocation.dimension)
+		if (dimension != anotherLocation.getDimension())
 			throw new LocationDimensionalityMismatchException();
 		if (dimension < 1) // This should never happen...
 			return 0;

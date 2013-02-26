@@ -24,9 +24,10 @@ public class IntroState extends State {
 	}
 
 	@Override
-	public void initialize() {
+	public void initialize()
+	{
 		keyDown = true;
-		Sounds.AIRSTRIKE.play((float)6);
+		Music.INTRO_MUSIC.play((float)6);
 //		ATTN: All music and sounds are disabled until the sound bug due to improper audio calls is resolved
 	}
 
