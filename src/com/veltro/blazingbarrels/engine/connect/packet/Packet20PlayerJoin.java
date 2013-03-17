@@ -2,7 +2,6 @@ package com.veltro.blazingbarrels.engine.connect.packet;
 
 import java.net.InetAddress;
 
-
 /**
  * This packet is sent from the client after receiving a positive {@link Packet01AuthResponse} and serves to inform the
  * server of the client's intent to join and play in-game. Upon receiving this packet, the server broadcasts a

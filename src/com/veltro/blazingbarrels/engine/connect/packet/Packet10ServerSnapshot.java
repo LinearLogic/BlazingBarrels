@@ -2,7 +2,6 @@ package com.veltro.blazingbarrels.engine.connect.packet;
 
 import java.net.InetAddress;
 
-
 /**
  * This packet is sent to a client to provide it with all the information it needs to create a local copy of the game
  * world and all its contents. Due to size limit on the {@link BBPacket} payload, the server will occasionally send

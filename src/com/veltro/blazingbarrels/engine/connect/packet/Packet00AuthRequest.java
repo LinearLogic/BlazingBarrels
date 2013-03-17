@@ -2,7 +2,6 @@ package com.veltro.blazingbarrels.engine.connect.packet;
 
 import java.net.InetAddress;
 
-
 /**
  * The packet sent by the client when attempting to authorize on a server in order to join and play. It contains the
  * username and password entered in the {@link ConnectState}. If the password matches the server's password or if the
