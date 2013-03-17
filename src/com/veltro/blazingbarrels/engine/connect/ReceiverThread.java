@@ -6,8 +6,8 @@ import java.net.DatagramSocket;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.veltro.blazingbarrels.engine.connect.packet.BBPacket;
-import com.veltro.blazingbarrels.engine.connect.packet.Packet1AuthResponse;
-import com.veltro.blazingbarrels.engine.connect.packet.Packet2DeauthWarning;
+import com.veltro.blazingbarrels.engine.connect.packet.Packet01AuthResponse;
+import com.veltro.blazingbarrels.engine.connect.packet.Packet02DeauthWarning;
 
 /**
  * A thread dedicated to receiving Datagram packets over a network socket. While running, this thread receives Datagram
@@ -48,34 +48,27 @@ public class ReceiverThread extends Thread {
 			} catch (IOException e) {
 				continue;
 			}
-
 			
 			// Unpack the packet's contents
 			String data[] = new String(inbound.getData(), 0, inbound.getLength()).split("\\s+", 2);
+			if (data.length <= 1) // No packet data beyond an ID has been supplied - discard packet
+				continue;
 			int id;
 			try {
 				id = Integer.parseInt(data[0]);
 			} catch (NumberFormatException e) { // Invalid packet format - discard packet
 				continue;
 			}
-			BBPacket received;
+			data = data[1].split("\\s+");
+			BBPacket received = null;
 
-			switch(id) { // Only the id values of packets that a client should normally receive are handled
-				case 1:
-					String[] info = data[1].split("\\s+");
-					if (info.length != 2) // Invalid data format
-						continue;
-					received = new Packet1AuthResponse(info[0], info[1], inbound.getAddress(), inbound.getPort());
-					break;
-				case 2:
-					if (data.length != 2) // Invalid data format
-						continue;
-					received = new Packet2DeauthWarning(data[1], inbound.getAddress(), inbound.getPort());
-					break;
+			switch(id) { // Only the id values of packets that the client should normally receive are handled
+				// TODO: generate packets from the id value
 				default: // Invalid packet for a client to be receiving - discard packet
-					continue;
+					break;
 			}
-			incomingPacketQueue.add(received);
+			if (received != null)
+				incomingPacketQueue.add(received);
 			
 		}
 		socket.close();

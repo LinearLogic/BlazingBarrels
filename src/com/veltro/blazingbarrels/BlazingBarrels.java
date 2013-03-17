@@ -22,11 +22,11 @@ import com.veltro.blazingbarrels.game.state.StateType;
  * and {@link #main(String[]) program launch point}.
  * 
  * @author LinearLogic
- * @version 0.2.10
+ * @version 0.3.0
  */
 public class BlazingBarrels {
 
-	public static final String VERSION = "0.2.10";
+	public static final String VERSION = "0.3.0";
 	/**
 	 * If this flag is 'true', the program will log its activity to Console
 	 */
@@ -243,22 +243,23 @@ public class BlazingBarrels {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("Welcome to BlazingBarrels! Run in DEBUG mode? (Y/N)");
-		Scanner sc = new Scanner(System.in);
-		while(true) {
-			String response = sc.nextLine();
-			if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes")) {
-				debugModeEnabled = true;
-				break;
-			}
-			else if (response.equalsIgnoreCase("n") || response.equalsIgnoreCase("no")) {
-				debugModeEnabled = false;
-				break;
-			}
-			else
-				System.out.println("Invalid answer, please type 'Y' or 'N'");
-		}
-		sc.close();
-		new BlazingBarrels(960, 540);
+		System.err.println("Game is not in a stable state. Cancelling launch...");
+//		System.out.println("Welcome to BlazingBarrels! Run in DEBUG mode? (Y/N)");
+//		Scanner sc = new Scanner(System.in);
+//		while(true) {
+//			String response = sc.nextLine();
+//			if (response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes")) {
+//				debugModeEnabled = true;
+//				break;
+//			}
+//			else if (response.equalsIgnoreCase("n") || response.equalsIgnoreCase("no")) {
+//				debugModeEnabled = false;
+//				break;
+//			}
+//			else
+//				System.out.println("Invalid answer, please type 'Y' or 'N'");
+//		}
+//		sc.close();
+//		new BlazingBarrels(960, 540);
 	}
 }
