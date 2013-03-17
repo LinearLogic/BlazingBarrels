@@ -9,7 +9,7 @@ import java.net.InetAddress;
  * these packets, the user's account will be deauthorized on the server, meaning that a new login handshake will have
  * to occur before the client can rejoin the server.<p>
  * 
- * This packet is only ever received by the server.
+ * This packet is only ever received by the client.
  * 
  * @author LinearLogic
  * @since 0.2.10
