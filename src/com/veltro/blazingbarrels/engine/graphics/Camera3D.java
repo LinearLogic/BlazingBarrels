@@ -84,7 +84,7 @@ public class Camera3D implements Camera<Location3D> {
 	 * {@link #Camera3D(float, float, float, float, Location3D) complete constructor}
 	 */
 	public Camera3D() {
-		this(90, BlazingBarrels.getWindowWidth() / BlazingBarrels.getWindowHeight(), 0.3f, 200, new Location3D());
+		this(80, (float) BlazingBarrels.getWindowWidth() / (float) BlazingBarrels.getWindowHeight(), 0.3f, 200, new Location3D());
 	}
 
 	/**

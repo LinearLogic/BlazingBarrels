@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL15.*;
 
 import org.lwjgl.util.glu.Cylinder;
 import org.lwjgl.util.glu.Sphere;
+import org.lwjgl.util.glu.Disk;
 
 import com.veltro.blazingbarrels.engine.graphics.model.Model;
 import com.veltro.blazingbarrels.game.location.Location3D;
@@ -26,8 +27,8 @@ public class RenderBot3D {
 	 * @param bottomRadius The radius, in pixels, of the bottom of the cylinder
 	 * @param topRadius The radius, in pixels, of the top of the cylinder
 	 * @param height The height, in pixels, of the cylinder (the distance between its bases)
-	 * @param slices The number of horizontal and vertical slices to use to divide the sphere for rendering (the higher
-	 * this number, the smoother the surface of the sphere)
+	 * @param slices The number of horizontal and vertical slices to use to divide the cylinder for rendering (the
+	 * higher this number, the smoother the surface of the cylinder)
 	 * @param location The location (position and rotation) of the center of the base of the cylinder
 	 * @param r Red intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param g Green intensity (must be between 0.0 and 1.0, inclusive)
@@ -46,8 +47,8 @@ public class RenderBot3D {
 	 * @param bottomRadius The radius, in pixels, of the bottom of the cylinder
 	 * @param topRadius The radius, in pixels, of the top of the cylinder
 	 * @param height The height, in pixels, of the cylinder (the distance between its bases)
-	 * @param slices The number of horizontal and vertical slices to use to divide the sphere for rendering (the higher
-	 * this number, the smoother the surface of the sphere)
+	 * @param slices The number of horizontal and vertical slices to use to divide the cylinder for rendering (the
+	 * higher this number, the smoother the surface of the cylinder)
 	 * @param location The location (position and rotation) of the center of the base of the cylinder
 	 * @param r Red intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param g Green intensity (must be between 0.0 and 1.0, inclusive)
@@ -57,12 +58,72 @@ public class RenderBot3D {
 	public void renderTransparentColoredCylinder(float bottomRadius, float topRadius, float height, int slices,
 			Location3D location, float r, float g, float b, float transparency) {
 		glPushMatrix();
+		if (slices < 3) // Nothing will be rendered
+			slices = 3;
+
+		// Apply the location and color:
 		glTranslatef(-location.getX(), -location.getY(), -location.getZ());
-		glRotatef(location.getPitch(), -1, 0, 0);
-        glRotatef(location.getYaw() - 90, 0, 1, 0);
+		glRotatef(90 + location.getPitch(), -1, 0, 0);
+        glRotatef(location.getYaw(), 0, 1, 0);
         glRotatef(location.getRoll(), 0, 0, 1);
         glColor4f(r, g, b, transparency);
+
+        // Draw the cylinder:
         (new Cylinder()).draw(bottomRadius, topRadius, height, slices, slices);
+        glPopMatrix();
+	}
+
+	/**
+	 * Renders a fully opaque disk with the specified attributes at the given {@link Location3D location}. The outer
+	 * radius is self-explanatory; the inner radius is the radius of the hole in the disk. If it is zero, the disk will
+	 * be solid throughout. If the inner radius is greater than zero, however, the result will be a washer (a disk with
+	 * a hollow center).
+	 * 
+	 * @param outerRadius The outer radius of the disk, in pixels
+	 * @param innerRadius The inner radius of the disk, in pixels
+	 * @param slices The number of horizontal and vertical slices to use to divide the disk for rendering (the higher
+	 * this number, the smoother the edges of the disk)
+	 * @param location The location (position and rotation) of the center of the disk
+	 * @param r Red intensity (must be between 0.0 and 1.0, inclusive)
+	 * @param g Green intensity (must be between 0.0 and 1.0, inclusive)
+	 * @param b Blue intensity (must be between 0.0 and 1.0, inclusive)
+	 */
+	public void renderColoredDisk(float outerRadius, float innerRadius, int slices, Location3D location, float r,
+			float g, float b) {
+		renderTransparentColoredDisk(outerRadius, innerRadius, slices, location, r, g, b, 1);
+	}
+
+	/**
+	 * Renders a (partially) transparent disk with the specified attributes at the given {@link Location3D location}.
+	 * The outer radius is self-explanatory; the inner radius is the radius of the hole in the disk. If it is zero, the
+	 * disk will be solid throughout. If the inner radius is greater than zero, however, the result will be a washer (a
+	 * disk with a hollow center).
+	 * 
+	 * @param outerRadius The outer radius of the disk, in pixels
+	 * @param innerRadius The inner radius of the disk, in pixels
+	 * @param slices The number of horizontal and vertical slices to use to divide the disk for rendering (the higher
+	 * this number, the smoother the edges of the disk)
+	 * @param location The location (position and rotation) of the center of the disk
+	 * @param r Red intensity (must be between 0.0 and 1.0, inclusive)
+	 * @param g Green intensity (must be between 0.0 and 1.0, inclusive)
+	 * @param b Blue intensity (must be between 0.0 and 1.0, inclusive)
+	 * @param transparency The transparency factor of the rectangle (0.0 = entirely transparent, 1.0 = entirely opaque)
+	 */
+	public void renderTransparentColoredDisk(float outerRadius, float innerRadius, int slices, Location3D location,
+			float r, float g, float b, float transparency) {
+		glPushMatrix();
+		if (slices < 3) // Nothing will be rendered
+			slices = 3;
+
+		// Apply the location and color:
+		glTranslatef(-location.getX(), -location.getY(), -location.getZ());
+		glRotatef(90 + location.getPitch(), -1, 0, 0);
+        glRotatef(location.getYaw(), 0, 1, 0);
+        glRotatef(location.getRoll(), 0, 0, 1);
+        glColor4f(r, g, b, transparency);
+
+        // Draw the disk:
+        (new Disk()).draw(outerRadius, innerRadius, slices, slices);
         glPopMatrix();
 	}
 
@@ -102,8 +163,6 @@ public class RenderBot3D {
 	 */
 	public void renderTransparentColoredModel(Model model, Location3D location, float r, float g, float b,
 			float transparency) {
-//		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//        glLoadIdentity();
 		glPushMatrix();
         glBindBuffer(GL_ARRAY_BUFFER, model.getVBOVertexHandle());
         glVertexPointer(3, GL_FLOAT, 0, 0L);
@@ -112,13 +171,14 @@ public class RenderBot3D {
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_NORMAL_ARRAY);
 
-        // Apply the location, color, and transparency:
+        // Apply the location and color:
         glRotatef(location.getPitch(), -1, 0, 0);
-        glRotatef(location.getYaw() - 90, 0, 1, 0);
+        glRotatef(location.getYaw(), 0, 1, 0);
         glRotatef(location.getRoll(), 0, 0, 1);
         glTranslatef(-location.getX(), -location.getY(), -location.getZ());
         glColor4f(r, g, b, transparency);
 
+        // Draw the model:
         glMaterialf(GL_FRONT, GL_SHININESS, 10f);
         glDrawArrays(GL_TRIANGLES, 0, model.getFaces().size() * 3);
         glDisableClientState(GL_VERTEX_ARRAY);
@@ -140,7 +200,7 @@ public class RenderBot3D {
 	 * @param g Green intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param b Blue intensity (must be between 0.0 and 1.0, inclusive)
 	 */
-	public void renderSphere(float radius, int slices, float x, float y, float z, float r, float g, float b) {
+	public void renderColoredSphere(float radius, int slices, float x, float y, float z, float r, float g, float b) {
 		renderTransparentColoredSphere(radius, slices, x, y, z, r, g, b, 1);
 	}
 	/**
@@ -160,8 +220,14 @@ public class RenderBot3D {
 	public void renderTransparentColoredSphere(float radius, int slices, float x, float y, float z, float r, float g,
 			float b, float transparency) {
 		glPushMatrix();
+		if (slices < 2)
+			slices = 2;
+
+		// Apply translations and color:
 		glTranslatef(-x, -y, -z);
 		glColor4f(r, g, b, transparency);
+
+		// Draw the sphere:
 		(new Sphere()).draw(radius, slices, slices);
 		glPopMatrix();
 	}
