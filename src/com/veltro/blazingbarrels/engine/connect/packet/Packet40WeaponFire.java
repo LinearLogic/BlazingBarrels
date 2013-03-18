@@ -3,7 +3,6 @@ package com.veltro.blazingbarrels.engine.connect.packet;
 import java.net.InetAddress;
 
 import com.veltro.blazingbarrels.game.location.Location3D;
-import com.veltro.blazingbarrels.game.player.Player;
 
 /**
  * This packet is sent from a client to the server when the client fires a weapon, and from the server to all connected

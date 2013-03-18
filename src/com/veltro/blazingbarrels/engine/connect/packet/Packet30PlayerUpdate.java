@@ -3,7 +3,6 @@ package com.veltro.blazingbarrels.engine.connect.packet;
 import java.net.InetAddress;
 
 import com.veltro.blazingbarrels.game.location.Location3D;
-import com.veltro.blazingbarrels.game.player.Player;
 
 /**
  * This packet is sent by a client to update the server's copy of the client's {@link Player}, and is broadcasted by
