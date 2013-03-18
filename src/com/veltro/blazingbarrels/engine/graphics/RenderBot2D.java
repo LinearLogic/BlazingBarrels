@@ -5,8 +5,10 @@ import static org.lwjgl.opengl.GL11.*;
 import org.newdawn.slick.opengl.Texture;
 
 import com.veltro.blazingbarrels.BlazingBarrels;
+
 /**
- * RenderBot2D is a utility class that provides various methods for two-dimensional rendering.
+ * RenderBot2D is a utility class that provides various methods for two-dimensional rendering, such as drawing strings
+ * or textured rectangles.
  * 
  * @author LinearLogic
  * @since 0.4.1

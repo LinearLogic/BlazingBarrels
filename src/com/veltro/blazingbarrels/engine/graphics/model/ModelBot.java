@@ -14,7 +14,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.util.vector.Vector3f;
 
 /**
- * The ModelBot provides methods for handling 3-D {@link Model models}
+ * The ModelBot provides methods for handling three-dimensional {@link Model models}
  * 
  * @author LinearLogic
  * @since 0.0.5
@@ -57,10 +57,11 @@ public class ModelBot {
 	}
 
 	/**
-	 * Creates a VBO (virtual buffer object) for the provided {@link Model}, and loads it into the openGL pipe.
+	 * Creates a VBO (virtual buffer object) for the provided {@link Model}, and loads it into the openGL pipe. The
+	 * vertex and normal handles of the newly created VBO are then stored in the model, to be retrieved when rendering
+	 * the model in the game world.
 	 * 
 	 * @param model The model to render as a VBO
-	 * @return An integer Array consisting of the vertex and normal VBO handles
 	 */
 	public static void generateVBO(Model model) {
 		int vertexHandle = glGenBuffers();
