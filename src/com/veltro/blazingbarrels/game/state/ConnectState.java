@@ -42,19 +42,12 @@ public class ConnectState extends State {
 		font = new UnicodeFont(awtFont);
 		font.getEffects().add(new ColorEffect(Color.white));
 		font.addAsciiGlyphs();
-		try {
-			font.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			font.loadGlyphs();
+//		} catch (SlickException e) {
+//			e.printStackTrace();
+//		}
 		keyDown = true;
-		glGetFloat(GL_PROJECTION_MATRIX, perspectiveProjMatrix);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, Display.getWidth(), 0, Display.getHeight(), 1, -1);
-		glGetFloat(GL_PROJECTION_MATRIX, orthographicProjMatrix);
-		glLoadMatrix(perspectiveProjMatrix);
-		glMatrixMode(GL_MODELVIEW_MATRIX);
 	}
 
 	@Override
@@ -62,7 +55,13 @@ public class ConnectState extends State {
 		// Graphics setup - lighting
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		
+		glGetFloat(GL_PROJECTION_MATRIX, perspectiveProjMatrix);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, Display.getWidth(), 0, Display.getHeight(), 1, -1);
+		glGetFloat(GL_PROJECTION_MATRIX, orthographicProjMatrix);
+		glLoadMatrix(perspectiveProjMatrix);
+		glMatrixMode(GL_MODELVIEW_MATRIX);
 		keyDown = true;
 	}
 
