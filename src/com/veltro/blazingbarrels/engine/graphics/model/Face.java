@@ -1,6 +1,7 @@
 package com.veltro.blazingbarrels.engine.graphics.model;
 
 import org.lwjgl.util.vector.Vector3f;
+import org.newdawn.slick.opengl.Texture;
 
 /**
  * A Face is a two-dimensional surface specified by a 3-D vertex and normal vector.
@@ -22,13 +23,23 @@ public class Face {
 	public final Vector3f NORMAL;
 
 	/**
+	 * The index of the texture to be applied to the face
+	 */
+	public final Vector3f TEXTURE_INDEX;
+
+	public final Texture TEXTURE;
+
+	/**
 	 * Constructor - initializes the {@link #VERTEX} and {@link #NORMAL} vectors with the supplied Vector3f objects.
 	 * 
-	 * @param vertex
-	 * @param normal
+	 * @param vertexCoord
+	 * @param textureCoord
+	 * @param normalCoord
 	 */
-	public Face(Vector3f vertex, Vector3f normal) {
-		this.VERTEX = vertex;
-		this.NORMAL = normal;
+	public Face(Vector3f vertex, Vector3f textureCoord, Vector3f normal, Texture texture) {
+		VERTEX = vertex;
+		TEXTURE_INDEX = textureCoord;
+		NORMAL = normal;
+		TEXTURE = texture;
 	}
 }

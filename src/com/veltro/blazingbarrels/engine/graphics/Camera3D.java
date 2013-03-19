@@ -54,7 +54,7 @@ public class Camera3D implements Camera<Location3D> {
 	private float dRoll;
 
 	/**
-	 * The angle of the camera's field of vision
+	 * The camera's field of view angle (twice the viewing angle)
 	 */
 	private float fov;
 
@@ -84,7 +84,7 @@ public class Camera3D implements Camera<Location3D> {
 	 * {@link #Camera3D(float, float, float, float, Location3D) complete constructor}
 	 */
 	public Camera3D() {
-		this(80, (float) BlazingBarrels.getWindowWidth() / (float) BlazingBarrels.getWindowHeight(), 0.3f, 200, new Location3D());
+		this(90, (float) BlazingBarrels.getWindowWidth() / (float) BlazingBarrels.getWindowHeight(), 0.3f, 200, new Location3D());
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class Camera3D implements Camera<Location3D> {
 	 * @param zFar The distance of the far clipping plane
 	 */
 	public Camera3D(float zNear, float zFar) {
-		this(80, 1, zNear, zFar, new Location3D());
+		this(90, (float) BlazingBarrels.getWindowWidth() / (float) BlazingBarrels.getWindowHeight(), zNear, zFar, new Location3D(0, 1, 0));
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class Camera3D implements Camera<Location3D> {
 	 * @param location The 3-D pixel {@link #location} of the camera
 	 */
 	public Camera3D(float fov, float aspectRatio, float zNear, float zFar, Location3D location) {
-		if (fov <= 0 || fov >= 120 /* TODO: determine a reasonable fov cap, if this one is not reasonable */)
+		if (fov <= 10 || fov >= 120 /* TODO: determine a reasonable fov cap, if this one is not reasonable */)
 			throw new IllegalArgumentException("The field of view angle must be between 0 and 120 degrees," +
 					"non-inclusive");
 		if (aspectRatio <= 0)
@@ -150,7 +150,7 @@ public class Camera3D implements Camera<Location3D> {
 		glPushAttrib(GL_TRANSFORM_BIT);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        GLU.gluPerspective(fov, aspectRatio, zNear, zFar);
+        GLU.gluPerspective(fov/2, aspectRatio, zNear, zFar);
         glPopAttrib();
     }
 

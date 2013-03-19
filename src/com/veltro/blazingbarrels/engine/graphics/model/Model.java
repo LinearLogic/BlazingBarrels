@@ -1,10 +1,11 @@
-package com.veltro.blazingbarrels.engine.graphics.model;
+ 	package com.veltro.blazingbarrels.engine.graphics.model;
 
-import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 /**
@@ -37,6 +38,11 @@ public class Model {
 	private List<Vector3f> normals;
 
 	/**
+	 * The vertices of a texture to be drawn onto the model
+	 */
+	private List<Vector2f> textureVertices;
+
+	/**
 	 * The surface faces ({@link Face} objects) of the model (each face has a corresponding vertex and normal vector)
 	 */
 	private List<Face> faces;
@@ -58,8 +64,8 @@ public class Model {
 	/**
 	 * @return The model's {@link #vertices}
 	 */
-	public List<Vector3f> getVertices() {
-		return vertices;
+	public Vector3f[] getVertices() {
+		return (Vector3f[]) vertices.toArray();
 	}
 
 	/**
@@ -74,8 +80,8 @@ public class Model {
 	/**
 	 * @return The model's {@link normals}
 	 */
-	public List<Vector3f> getNormals() {
-		return normals;
+	public Vector3f[] getNormals() {
+		return (Vector3f[]) normals.toArray();
 	}
 
 	/**
@@ -88,10 +94,26 @@ public class Model {
 	}
 
 	/**
+	 * @return The model's {@link #textureVertices}
+	 */
+	public Vector2f[] getTextureVertices() {
+		return (Vector2f[]) textureVertices.toArray();
+	}
+
+	/**
+	 * Adds a texture vertex to the list of the model's {@link #textureVertices}
+	 * 
+	 * @param texVertex
+	 */
+	public void addTextureVertex(Vector2f texVertex) {
+		textureVertices.add(texVertex);
+	}
+
+	/**
 	 * @return The model's {@link #faces}
 	 */
-	public List<Face> getFaces() {
-		return faces;
+	public Face[] getFaces() {
+		return (Face[]) faces.toArray();
 	}
 
 	/**

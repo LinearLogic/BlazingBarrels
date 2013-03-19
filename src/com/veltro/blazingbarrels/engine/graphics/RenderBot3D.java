@@ -36,7 +36,7 @@ public class RenderBot3D {
 	 */
 	public void renderColoredCylinder(float bottomRadius, float topRadius, float height, int slices,
 			Location3D location, float r, float g, float b) {
-		renderTransparentColoredCylinder(bottomRadius, topRadius, height, slices, location, topRadius, g, b, 1);
+		renderTransparentColoredCylinder(bottomRadius, topRadius, height, slices, location, r, g, b, 1);
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class RenderBot3D {
 
         // Draw the model:
         glMaterialf(GL_FRONT, GL_SHININESS, 10f);
-        glDrawArrays(GL_TRIANGLES, 0, model.getFaces().size() * 3);
+        glDrawArrays(GL_TRIANGLES, 0, model.getFaces().length * 3);
         glDisableClientState(GL_VERTEX_ARRAY);
         glDisableClientState(GL_NORMAL_ARRAY);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
