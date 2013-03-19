@@ -167,6 +167,12 @@ public class Camera3D implements Camera<Location3D> {
 	}
 
 	public void handleMouseInput(float speed) {
+		if (!Mouse.isGrabbed()) {
+			dYaw = 0;
+			dPitch = 0;
+			return;
+		}
+
 		// Horizontal rotation:
 		dYaw = ((float) Mouse.getDX()) * speed * 0.16f;
 

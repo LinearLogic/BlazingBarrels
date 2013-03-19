@@ -22,11 +22,11 @@ import com.veltro.blazingbarrels.game.state.StateType;
  * and {@link #main(String[]) program launch point}.
  * 
  * @author LinearLogic
- * @version 0.4.6
+ * @version 0.4.7
  */
 public class BlazingBarrels {
 
-	public static final String VERSION = "0.4.6";
+	public static final String VERSION = "0.4.7";
 	/**
 	 * If this flag is 'true', the program will log its activity to Console
 	 */
@@ -100,7 +100,7 @@ public class BlazingBarrels {
 		setCurrentState(StateType.INTRO, true);
 		while(running) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Reset 2D and 3D
-//			glLoadIdentity();
+			glLoadIdentity();
 			long currentTime = getTime();
 			delta = (int) (currentTime - lastFrameTime);
 			lastFrameTime = currentTime;
@@ -248,7 +248,7 @@ public class BlazingBarrels {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.err.println("Game is not in a stable state. Cancelling launch...");
+//		System.err.println("Game is not in a stable state. Cancelling launch...");
 //		System.out.println("Welcome to BlazingBarrels! Run in DEBUG mode? (Y/N)");
 //		Scanner sc = new Scanner(System.in);
 //		while(true) {
@@ -265,6 +265,6 @@ public class BlazingBarrels {
 //				System.out.println("Invalid answer, please type 'Y' or 'N'");
 //		}
 //		sc.close();
-//		new BlazingBarrels(960, 540);
+		new BlazingBarrels(960, 540);
 	}
 }

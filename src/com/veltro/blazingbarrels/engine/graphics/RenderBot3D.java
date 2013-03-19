@@ -27,16 +27,18 @@ public class RenderBot3D {
 	 * @param bottomRadius The radius, in pixels, of the bottom of the cylinder
 	 * @param topRadius The radius, in pixels, of the top of the cylinder
 	 * @param height The height, in pixels, of the cylinder (the distance between its bases)
-	 * @param slices The number of horizontal and vertical slices to use to divide the cylinder for rendering (the
-	 * higher this number, the smoother the surface of the cylinder)
+	 * @param slices The number of edges on the circle around the sphere's equator (the more slices, the smoother the
+	 * surface of the sphere)
+	 * @param stacks The number of horizontal stacks to subdivide the sphere into (the more stacks, the less obvious
+	 * the horizontal segmentation of the sphere)
 	 * @param location The location (position and rotation) of the center of the base of the cylinder
 	 * @param r Red intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param g Green intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param b Blue intensity (must be between 0.0 and 1.0, inclusive)
 	 */
-	public void renderColoredCylinder(float bottomRadius, float topRadius, float height, int slices,
+	public void renderColoredCylinder(float bottomRadius, float topRadius, float height, int slices, int stacks,
 			Location3D location, float r, float g, float b) {
-		renderTransparentColoredCylinder(bottomRadius, topRadius, height, slices, location, r, g, b, 1);
+		renderTransparentColoredCylinder(bottomRadius, topRadius, height, slices, stacks, location, r, g, b, 1);
 	}
 
 	/**
@@ -47,8 +49,10 @@ public class RenderBot3D {
 	 * @param bottomRadius The radius, in pixels, of the bottom of the cylinder
 	 * @param topRadius The radius, in pixels, of the top of the cylinder
 	 * @param height The height, in pixels, of the cylinder (the distance between its bases)
-	 * @param slices The number of horizontal and vertical slices to use to divide the cylinder for rendering (the
-	 * higher this number, the smoother the surface of the cylinder)
+	 * @param slices The number of edges on the circle around the sphere's equator (the more slices, the smoother the
+	 * surface of the sphere)
+	 * @param stacks The number of horizontal stacks to subdivide the sphere into (the more stacks, the less obvious
+	 * the horizontal segmentation of the sphere)
 	 * @param location The location (position and rotation) of the center of the base of the cylinder
 	 * @param r Red intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param g Green intensity (must be between 0.0 and 1.0, inclusive)
@@ -56,20 +60,20 @@ public class RenderBot3D {
 	 * @param transparency The transparency factor of the rectangle (0.0 = entirely transparent, 1.0 = entirely opaque)
 	 */
 	public void renderTransparentColoredCylinder(float bottomRadius, float topRadius, float height, int slices,
-			Location3D location, float r, float g, float b, float transparency) {
+			int stacks, Location3D location, float r, float g, float b, float transparency) {
 		glPushMatrix();
 		if (slices < 3) // Nothing will be rendered
 			slices = 3;
 
 		// Apply the location and color:
-		glTranslatef(-location.getX(), -location.getY(), -location.getZ());
+		glTranslatef(-location.getX(), location.getY(), -location.getZ());
 		glRotatef(90 + location.getPitch(), -1, 0, 0);
         glRotatef(location.getYaw(), 0, 1, 0);
         glRotatef(location.getRoll(), 0, 0, 1);
         glColor4f(r, g, b, transparency);
 
         // Draw the cylinder:
-        (new Cylinder()).draw(bottomRadius, topRadius, height, slices, slices);
+        (new Cylinder()).draw(bottomRadius, topRadius, height, slices, stacks);
         glPopMatrix();
 	}
 
@@ -116,7 +120,7 @@ public class RenderBot3D {
 			slices = 3;
 
 		// Apply the location and color:
-		glTranslatef(-location.getX(), -location.getY(), -location.getZ());
+		glTranslatef(-location.getX(), location.getY(), -location.getZ());
 		glRotatef(90 + location.getPitch(), -1, 0, 0);
         glRotatef(location.getYaw(), 0, 1, 0);
         glRotatef(location.getRoll(), 0, 0, 1);
@@ -175,7 +179,7 @@ public class RenderBot3D {
         glRotatef(location.getPitch(), -1, 0, 0);
         glRotatef(location.getYaw(), 0, 1, 0);
         glRotatef(location.getRoll(), 0, 0, 1);
-        glTranslatef(-location.getX(), -location.getY(), -location.getZ());
+        glTranslatef(-location.getX(), location.getY(), -location.getZ());
         glColor4f(r, g, b, transparency);
 
         // Draw the model:
@@ -191,8 +195,10 @@ public class RenderBot3D {
 	 * Renders a fully opaque sphere with the specified attributes at the provided location
 	 * 
 	 * @param radius The radius, in pixels, of the sphere
-	 * @param slices The number of horizontal and vertical slices to use to divide the sphere for rendering (the higher
-	 * this number, the smoother the surface of the sphere)
+	 * @param slices The number of edges on the circle around the sphere's equator (the more slices, the smoother the
+	 * surface of the sphere)
+	 * @param stacks The number of horizontal stacks to subdivide the sphere into (the more stacks, the less obvious
+	 * the horizontal segmentation of the sphere)
 	 * @param x The x-coordinate, in pixels, of the sphere's center
 	 * @param y The y-coordinate, in pixels, of the sphere's center
 	 * @param z The z-coordinate, in pixels, of the sphere's center
@@ -200,15 +206,18 @@ public class RenderBot3D {
 	 * @param g Green intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param b Blue intensity (must be between 0.0 and 1.0, inclusive)
 	 */
-	public void renderColoredSphere(float radius, int slices, float x, float y, float z, float r, float g, float b) {
-		renderTransparentColoredSphere(radius, slices, x, y, z, r, g, b, 1);
+	public void renderColoredSphere(float radius, int slices, int stacks, float x, float y, float z, float r, float g,
+			float b) {
+		renderTransparentColoredSphere(radius, slices, stacks, x, y, z, r, g, b, 1);
 	}
 	/**
 	 * Renders a (partially) transparent sphere with the specified attributes at the provided location
 	 * 
 	 * @param radius The radius, in pixels, of the sphere
-	 * @param slices The number of horizontal and vertical slices to use to divide the sphere for rendering (the higher
-	 * this number, the smoother the surface of the sphere)
+	 * @param slices The number of edges on the circle around the sphere's equator (the more slices, the smoother the
+	 * surface of the sphere)
+	 * @param stacks The number of horizontal stacks to subdivide the sphere into (the more stacks, the less obvious
+	 * the horizontal segmentation of the sphere)
 	 * @param x The x-coordinate, in pixels, of the sphere's center
 	 * @param y The y-coordinate, in pixels, of the sphere's center
 	 * @param z The z-coordinate, in pixels, of the sphere's center
@@ -217,18 +226,18 @@ public class RenderBot3D {
 	 * @param b Blue intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param transparency The transparency factor of the rectangle (0.0 = entirely transparent, 1.0 = entirely opaque)
 	 */
-	public void renderTransparentColoredSphere(float radius, int slices, float x, float y, float z, float r, float g,
-			float b, float transparency) {
+	public void renderTransparentColoredSphere(float radius, int slices, int stacks, float x, float y, float z, float r,
+			float g, float b, float transparency) {
 		glPushMatrix();
 		if (slices < 2)
 			slices = 2;
 
 		// Apply translations and color:
-		glTranslatef(-x, -y, -z);
+		glTranslatef(-x, y, -z);
 		glColor4f(r, g, b, transparency);
 
 		// Draw the sphere:
-		(new Sphere()).draw(radius, slices, slices);
+		(new Sphere()).draw(radius, slices, stacks);
 		glPopMatrix();
 	}
 }
