@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 /**
  * A more complex {@link Location} subclass, Location3D objects represent three-dimensional locations that factor in
  * rotation (yaw, pitch, and roll). NOTE: the 'up and down' dimension is the y dimension, as is the convention for
@@ -154,6 +156,30 @@ public class Location3D extends Location {
 	 */
 	public void setCoordinates(Vector3f coordinateVector) {
 		setCoordinates(coordinateVector.x, coordinateVector.y, coordinateVector.z);
+	}
+
+	/**
+	 * Sets the {@link Location#coordinates} to the provided floating point values by calling the method with the same
+	 * name in the {@link Location superclass}
+	 * @param x The x-coordinate, in pixels
+	 * @param y The y-coordinate, in pixels
+	 * @param z The z-coordinate, in pixels
+	 */
+	public void setCoordinates(float x, float y, float z) {
+		setCoordinates(x, y, z);
+	}
+
+	/**
+	 * Sets the rotation (around all three axes) of the location
+	 * 
+	 * @param yaw The new {@link #yaw}
+	 * @param pitch The new {@link #pitch}
+	 * @param roll The new {@link #roll
+	 */
+	public void setRotation(float yaw, float pitch, float roll) {
+		this.yaw = yaw;
+		this.pitch = pitch;
+		this.roll = roll;
 	}
 
 	/**

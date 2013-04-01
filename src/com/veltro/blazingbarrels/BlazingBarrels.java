@@ -22,11 +22,11 @@ import com.veltro.blazingbarrels.game.state.StateType;
  * and {@link #main(String[]) program launch point}.
  * 
  * @author LinearLogic
- * @version 0.4.7
+ * @version 0.4.8
  */
 public class BlazingBarrels {
 
-	public static final String VERSION = "0.4.7";
+	public static final String VERSION = "0.4.8";
 	/**
 	 * If this flag is 'true', the program will log its activity to Console
 	 */

@@ -162,10 +162,16 @@ public class Camera3D implements Camera<Location3D> {
             glEnable(GL_DEPTH_CLAMP);
     }
 
+    /**
+     * Calls {@link #handleMouseInput(float)} method passing the default speed value
+     */
 	public void handleMouseInput() {
 		handleMouseInput(1);
 	}
 
+	/**
+	 * Updates the camera's rotation based on mouse movement
+	 */
 	public void handleMouseInput(float speed) {
 		if (!Mouse.isGrabbed()) {
 			dYaw = 0;
@@ -174,16 +180,37 @@ public class Camera3D implements Camera<Location3D> {
 		}
 
 		// Horizontal rotation:
-		dYaw = ((float) Mouse.getDX()) * speed * 0.16f;
+		dYaw = -((float) Mouse.getDX()) * speed * 0.16f;
 
 		// Vertical rotation:
 		dPitch = ((float) Mouse.getDY()) * speed * 0.16f;
+		
+		// Handle pitch angle
+		float pitch = location.getPitch();
+		if (pitch + dPitch > 80 && pitch + dPitch < 280) {
+			if (dPitch > 0) // Max upward angle reached; decrease dPitch so that it does not push pitch past the max
+				dPitch = (pitch < 80) ? 80 - (pitch + 1) : 80 - ((360 - pitch) + 1);
+			else // Max downward angle reached; increase dPitch (negative) so that it does not push pitch past the max
+				dPitch = (pitch > 280) ? 280 - (pitch - 1) : 280 - ((360 - pitch) - 1);
+		}
+		if (Math.abs(dPitch) < 2 /* Reduces jittery behavior when pitch is near its max */ && pitch + dPitch >= 79 &&
+				pitch + dPitch <= 281)
+			dPitch = 0;
+
+		// Update rotation of location
+		location.rotate(dYaw, dPitch, dRoll);
 	}
 
+	/**
+	 * Calls the {@link #handleKeyboardInput(float)} passing the default speed value
+	 */
 	public void handleKeyboardInput() {
 		this.handleKeyboardInput(10);
 	}
 
+	/**
+	 * Updates the camera's position based on the input from the keyboard and the camera's current rotation
+	 */
 	public void handleKeyboardInput(float speed) {
 		float dSideways = 0, dForward = 0; // Used to incorporate rotation into the horizontal movement calculation
 		dx = 0;
@@ -209,33 +236,16 @@ public class Camera3D implements Camera<Location3D> {
 		}
 
 		 // Handle direction in which the camera is looking
-		dx -= dForward * (float) Math.cos(location.getYaw() * Math.PI / 180.0);
-		dz -= dForward * (float) Math.sin(location.getYaw() * Math.PI / 180.0);
-		dx -= dSideways * (float) Math.sin(270 - location.getYaw() * Math.PI / 180.0);
-		dz -= dSideways * (float) Math.cos(270 - location.getYaw() * Math.PI / 180.0);
+		dz += dForward * (float) Math.cos(location.getYaw() * Math.PI / 180.0);
+		dx += dForward * (float) Math.sin(-location.getYaw() * Math.PI / 180.0);
+		dz += dSideways * (float) Math.sin(location.getYaw() * Math.PI / 180.0);
+		dx += dSideways * (float) Math.cos(location.getYaw() * Math.PI / 180.0);
 
 		// Vertical movement (not affected by the rotation of the camera's viewing window)
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
 			dy += speed * BlazingBarrels.getDelta() / 1000.0;
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
 			dy -= speed * BlazingBarrels.getDelta() / 1000.0;
-	}
-
-	public void updatePosition() {
-		// Handle pitch angle
-		float pitch = location.getPitch();
-		if (pitch + dPitch > 80 && pitch + dPitch < 280) {
-			if (dPitch > 0) // Max upward angle reached; decrease dPitch so that it does not push pitch past the max
-				dPitch = (pitch < 80) ? 80 - (pitch + 1) : 80 - ((360 - pitch) + 1);
-			else // Max downward angle reached; increase dPitch (negative) so that it does not push pitch past the max
-				dPitch = (pitch > 280) ? 280 - (pitch - 1) : 280 - ((360 - pitch) - 1);
-		}
-		if (Math.abs(dPitch) < 2 /* Reduces jittery behavior when pitch is near its max */ && pitch + dPitch >= 79 &&
-				pitch + dPitch <= 281)
-			dPitch = 0;
-
-		// Update location object
-		location.rotate(dYaw, dPitch, dRoll);
 		location.translate(dx, dy, dz);
 	}
 
@@ -244,9 +254,9 @@ public class Camera3D implements Camera<Location3D> {
         glPushAttrib(GL_TRANSFORM_BIT);
         glMatrixMode(GL_MODELVIEW);
         glRotatef(location.getPitch(), -1, 0, 0);
-        glRotatef(location.getYaw() - 90, 0, 1, 0);
+        glRotatef(location.getYaw(), 0, -1, 0);
         glRotatef(location.getRoll(), 0, 0, 1);
-        glTranslatef(-location.getX(), -location.getY(), -location.getZ());
+        glTranslatef(-location.getX(), -location.getY(), location.getZ());
         glPopAttrib();
     }
 

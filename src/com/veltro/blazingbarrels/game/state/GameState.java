@@ -41,7 +41,6 @@ public class GameState extends State {
 
 	@Override
 	public void draw() {
-		camera.updatePosition();
 		camera.draw();
 	}
 }
