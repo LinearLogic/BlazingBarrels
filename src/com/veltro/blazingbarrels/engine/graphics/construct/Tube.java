@@ -4,11 +4,12 @@ import com.veltro.blazingbarrels.engine.graphics.RenderBot3D;
 import com.veltro.blazingbarrels.game.location.Location3D;
 
 /**
- * A tube (rendered upright by default) is a hollow cylinder that may or may not have endcaps, can have a different radius at
- * each end, and whose lateral surface is comprised of a configurable number of planar faces. As a result of this
- * variety of dimensions, a tube can be used to render a wide spectrum of shapes, such as a cone (if one radius is
+ * A tube (rendered upright by default) is a hollow cylinder that may or may not have endcaps, can have a different
+ * radius at each end, and whose lateral surface is comprised of a configurable number of planar faces. As a result of
+ * this variety of dimensions, a tube can be used to render a wide spectrum of shapes, such as a cone (if one radius is
  * zero), a pyramid (same as a cone but with fewer lateral faces), an hourglass (if one radius is the negative of the
- * other), and a rectangle (if the radii are the same, the lateral surface consists of four faces, and end caps are included).
+ * other), and a rectangle (if the radii are the same, the lateral surface consists of four faces, and end caps are
+ * included).
  * 
  * @author LinearLogic
  * @since 0.5.1
@@ -53,11 +54,11 @@ public class Tube extends Shape3D {
 	 * @param r The red-intensity of the tube's color (a float between 0 and 1)
 	 * @param g The green-intensity of the tube's color (a float between 0 and 1)
 	 * @param b The blue-intensity of the tube's color (a float between 0 and 1)
-	 * @param transparency The transparency level of teh tube's surface (a float between 0 and 1; 0 => transparent)
+	 * @param transparency The transparency level of the tube's surface (a float between 0 and 1; 0 => transparent)
 	 */
 	public Tube(float radius, float height, boolean endcaps, Location3D centerLocation, Location3D relativeLocation,
 			float r, float g, float b, float transparency) {
-		this(radius, radius, height, 48, endcaps, centerLocation, relativeLocation, r, g, b, transparency);
+		this(radius, radius, height, 32, endcaps, centerLocation, relativeLocation, r, g, b, transparency);
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class Tube extends Shape3D {
 	 * @param r The red-intensity of the tube's color (a float between 0 and 1)
 	 * @param g The green-intensity of the tube's color (a float between 0 and 1)
 	 * @param b The blue-intensity of the tube's color (a float between 0 and 1)
-	 * @param transparency The transparency level of teh tube's surface (a float between 0 and 1; 0 => transparent)
+	 * @param transparency The transparency level of the tube's surface (a float between 0 and 1; 0 => transparent)
 	 */
 	public Tube(float bottomRadius, float topRadius, float height, int lateralFaceCount, boolean endcaps,
 			Location3D centerLocation, Location3D relativeLocation, float r, float g, float b, float transparency) {
@@ -87,7 +88,7 @@ public class Tube extends Shape3D {
 	}
 
 	/**
-	 * Renders the tube by making a call to the renderColoredCylinder(...) method in {@link RenderBot3D}
+	 * Renders the tube by calling the renderColoredCylinder(...) method in {@link RenderBot3D}
 	 */
 	public void draw() {
 		Location3D l = new Location3D(location.getX() + centerLocation.getX(), location.getY() + centerLocation.getY(),

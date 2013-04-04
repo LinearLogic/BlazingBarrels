@@ -152,14 +152,17 @@ public class RenderBot3D {
 	 * @param b Blue intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param transparency The transparency factor of the rectangle (0.0 = entirely transparent, 1.0 = entirely opaque)
 	 */
-	public static void renderColoredSphere(float radius, int slices, int stacks, float x, float y, float z, float r,
+	public static void renderColoredSphere(float radius, int slices, int stacks, Location3D location, float r,
 			float g, float b, float transparency) {
 		glPushMatrix();
 		if (slices < 2)
 			slices = 2;
 
 		// Apply translations and color:
-		glTranslatef(-x, y, -z);
+		glTranslatef(-location.getX(), location.getY(), -location.getZ());
+		glRotatef(location.getYaw(), 0, 1, 0);
+		glRotatef(location.getPitch() + 90, -1, 0, 0);
+		glRotatef(location.getRoll(), 0, 0, 1);
 		glColor4f(r, g, b, transparency);
 
 		// Draw the sphere:
