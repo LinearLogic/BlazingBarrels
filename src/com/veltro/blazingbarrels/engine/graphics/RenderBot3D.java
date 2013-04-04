@@ -37,7 +37,7 @@ public class RenderBot3D {
 	 * @param b Blue intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param transparency The transparency factor of the rectangle (0.0 = entirely transparent, 1.0 = entirely opaque)
 	 */
-	public void renderColoredCylinder(float bottomRadius, float topRadius, float height, int slices,
+	public static void renderColoredCylinder(float bottomRadius, float topRadius, float height, int slices,
 			int stacks, Location3D location, float r, float g, float b, float transparency) {
 		glPushMatrix();
 		if (slices < 3) // Nothing will be rendered
@@ -71,7 +71,7 @@ public class RenderBot3D {
 	 * @param b Blue intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param transparency The transparency factor of the rectangle (0.0 = entirely transparent, 1.0 = entirely opaque)
 	 */
-	public void renderColoredDisk(float outerRadius, float innerRadius, int slices, Location3D location,
+	public static void renderColoredDisk(float outerRadius, float innerRadius, int slices, Location3D location,
 			float r, float g, float b, float transparency) {
 		glPushMatrix();
 		if (slices < 3) // Nothing will be rendered
@@ -95,7 +95,7 @@ public class RenderBot3D {
 	 * @param model The model whose VBO to retrieve and draw
 	 * @param location The location (position and rotation) in the game world at which to render the model
 	 */
-	public void renderModel(Model model, Location3D location) {
+	public static void renderModel(Model model, Location3D location) {
 		renderColoredModel(model, location, 0, 0, 0, 1);
 	}
 
@@ -110,7 +110,7 @@ public class RenderBot3D {
 	 * @param b Blue intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param transparency The transparency factor of the rectangle (0.0 = entirely transparent, 1.0 = entirely opaque)
 	 */
-	public void renderColoredModel(Model model, Location3D location, float r, float g, float b,
+	public static void renderColoredModel(Model model, Location3D location, float r, float g, float b,
 			float transparency) {
 		glPushMatrix();
         glBindBuffer(GL_ARRAY_BUFFER, model.getVBOVertexHandle());
@@ -152,7 +152,7 @@ public class RenderBot3D {
 	 * @param b Blue intensity (must be between 0.0 and 1.0, inclusive)
 	 * @param transparency The transparency factor of the rectangle (0.0 = entirely transparent, 1.0 = entirely opaque)
 	 */
-	public void renderColoredSphere(float radius, int slices, int stacks, float x, float y, float z, float r,
+	public static void renderColoredSphere(float radius, int slices, int stacks, float x, float y, float z, float r,
 			float g, float b, float transparency) {
 		glPushMatrix();
 		if (slices < 2)

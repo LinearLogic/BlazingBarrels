@@ -16,7 +16,7 @@ public abstract class Shape3D {
 	 * The shape's position (relative to the center of the {@link Construct3D} to which this shape belongs) and
 	 * rotation (absolute)
 	 */
-	private Location3D location;
+	protected Location3D location;
 
 	/**
 	 * The absolute location of the {@link Construct} to which this shape belongs
