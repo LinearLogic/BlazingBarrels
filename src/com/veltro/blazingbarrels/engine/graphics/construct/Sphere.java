@@ -14,20 +14,33 @@ import com.veltro.blazingbarrels.game.location.Location3D;
  */
 public class Sphere extends Shape3D {
 
+	/**
+	 * The radius, in pixels, of the sphere
+	 */
 	private float radius;
+
+	/**
+	 * The number of slices used to render the sphere (along with {@link #stacks}, this determines the smoothness of
+	 * the sphere's surface)
+	 */
 	private int slices;
+
+	/**
+	 * The number of stacks used to render the sphere (along with {@link #slices}, this determines the smoothness of
+	 * the sphere's surface)
+	 */
 	private int stacks;
 
 	/**
 	 * Shortcut constructor for smooth spheres - calls the full constructor passing the slices and stacks values as 32
 	 * 
 	 * @param radius The radius, in pixels, of the sphere
-	 * @param centerLocation The location of the {@link Construct3D} to which this tube belongs
-	 * @param relativeLocation The tube's position (relative to the above centerLocation) and rotation (absolute)
-	 * @param r The red-intensity of the tube's color (a float between 0 and 1)
-	 * @param g The green-intensity of the tube's color (a float between 0 and 1)
-	 * @param b The blue-intensity of the tube's color (a float between 0 and 1)
-	 * @param transparency The transparency level of the tube's surface (a float between 0 and 1; 0 => transparent)
+	 * @param centerLocation The location of the {@link Construct3D} to which this sphere belongs
+	 * @param relativeLocation The sphere's position (relative to the above centerLocation) and rotation (absolute)
+	 * @param r The red-intensity of the sphere's color (a float between 0 and 1)
+	 * @param g The green-intensity of the sphere's color (a float between 0 and 1)
+	 * @param b The blue-intensity of the sphere's color (a float between 0 and 1)
+	 * @param transparency The transparency level of the sphere's surface (a float between 0 and 1; 0 => transparent)
 	 */
 	public Sphere(float radius, Location3D centerLocation, Location3D relativeLocation, float r, float g, float b,
 			float transparency) {
@@ -41,12 +54,12 @@ public class Sphere extends Shape3D {
 	 * @param radius The radius, in pixels, of the sphere
 	 * @param slices The number of slices to use to render the sphere
 	 * @param stacks The number of stacks to use to render the sphere
-	 * @param centerLocation The location of the {@link Construct3D} to which this tube belongs
-	 * @param relativeLocation The tube's position (relative to the above centerLocation) and rotation (absolute)
-	 * @param r The red-intensity of the tube's color (a float between 0 and 1)
-	 * @param g The green-intensity of the tube's color (a float between 0 and 1)
-	 * @param b The blue-intensity of the tube's color (a float between 0 and 1)
-	 * @param transparency The transparency level of the tube's surface (a float between 0 and 1; 0 => transparent)
+	 * @param centerLocation The location of the {@link Construct3D} to which this sphere belongs
+	 * @param relativeLocation The sphere's position (relative to the above centerLocation) and rotation (absolute)
+	 * @param r The red-intensity of the sphere's color (a float between 0 and 1)
+	 * @param g The green-intensity of the sphere's color (a float between 0 and 1)
+	 * @param b The blue-intensity of the sphere's color (a float between 0 and 1)
+	 * @param transparency The transparency level of the sphere's surface (a float between 0 and 1; 0 => transparent)
 	 */
 	public Sphere(float radius, int slices, int stacks, Location3D centerLocation, Location3D relativeLocation,
 			float r, float g, float b, float transparency) {
@@ -60,9 +73,9 @@ public class Sphere extends Shape3D {
 	 * Renders the sphere by calling the renderColoredSphere(...) method in {@link RenderBot3D}
 	 */
 	public void draw() {
-		Location3D l = new Location3D(location.getX() + centerLocation.getX(), location.getY() + centerLocation.getY(),
-				location.getZ() + centerLocation.getZ(), location.getYaw(), location.getPitch(), location.getRoll());
-		RenderBot3D.renderColoredSphere(radius, slices, stacks, l, r, g, b, transparency);
+		RenderBot3D.renderColoredSphere(radius, slices, stacks, new Location3D(location.getX() + centerLocation.getX(),
+				location.getY() + centerLocation.getY(), location.getZ() + centerLocation.getZ(), location.getYaw(),
+				location.getPitch(), location.getRoll()), r, g, b, transparency);
 	}
 
 	/**

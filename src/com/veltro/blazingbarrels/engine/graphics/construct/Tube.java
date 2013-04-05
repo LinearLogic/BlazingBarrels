@@ -44,7 +44,7 @@ public class Tube extends Shape3D {
 	private boolean endcaps;
 
 	/**
-	 * Shortcut constructor for regular cylinders (uniform top and bottom radii, lateral face count of 48)
+	 * Shortcut constructor for regular cylinders (uniform top and bottom radii, lateral face count of 32)
 	 * 
 	 * @param radius The tube's radius, in pixels
 	 * @param height The tube's {@link #height}
