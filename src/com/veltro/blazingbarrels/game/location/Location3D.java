@@ -166,7 +166,7 @@ public class Location3D extends Location {
 	 * @param z The z-coordinate, in pixels
 	 */
 	public void setCoordinates(float x, float y, float z) {
-		setCoordinates(x, y, z);
+		super.setCoordinates(x, y, z);
 	}
 
 	/**
