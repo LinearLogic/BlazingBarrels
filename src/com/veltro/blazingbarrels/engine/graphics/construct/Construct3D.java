@@ -424,4 +424,24 @@ public class Construct3D {
 	public void clearConstructs() {
 		constructs.clear();
 	}
+
+	public static Construct3D MINIGUN() {
+		// MAKE ZE MINIGUN!!
+		Construct3D minigun = new Construct3D(new Location3D());
+
+		// Barrels:
+		minigun.addShape(new Tube(0.45f, 0.3f, 0.45f, 0.3f, 30, 32, true, null, new Location3D(1.5f, 0, 0), 0.1f, 0.1f, 0.1f, 1));
+		minigun.addShape(new Tube(0.45f, 0.3f, 0.45f, 0.3f, 30, 32, true, null, new Location3D(0.75f, 1.29903f, 0), 0.1f, 0.1f, 0.1f, 1));
+		minigun.addShape(new Tube(0.45f, 0.3f, 0.45f, 0.3f, 30, 32, true, null, new Location3D(-0.75f, 1.29903f, 0), 0.1f, 0.1f, 0.1f, 1));
+		minigun.addShape(new Tube(0.45f, 0.3f, 0.45f, 0.3f, 30, 32, true, null, new Location3D(-1.5f, 0, 0), 0.1f, 0.1f, 0.1f, 1));
+		minigun.addShape(new Tube(0.45f, 0.3f, 0.45f, 0.3f, 30, 32, true, null, new Location3D(-0.75f, -1.29903f, 0), 0.1f, 0.1f, 0.1f, 1));
+		minigun.addShape(new Tube(0.45f, 0.3f, 0.45f, 0.3f, 30, 32, true, null, new Location3D(0.75f, -1.29903f, 0), 0.1f, 0.1f, 0.1f, 1));
+
+		// Barrel bindings:
+		minigun.addShape(new Tube(2.4f, 6, true, null, new Location3D(0, 0, -0.1f), 0.2f, 0.2f, 0.2f, 1));
+		minigun.addShape(new Tube(2.4f, 1.2f, true, null, new Location3D(0, 0, 6.9f), 0.2f, 0.2f, 0.2f, 1));
+		minigun.addShape(new Tube(2.4f, 1.2f, true, null, new Location3D(0, 0, 27.3f), 0.2f, 0.2f, 0.2f, 1));
+
+		return minigun;
+	}
 }
