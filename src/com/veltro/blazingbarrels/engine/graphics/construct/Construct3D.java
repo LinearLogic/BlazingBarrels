@@ -444,4 +444,54 @@ public class Construct3D {
 
 		return minigun;
 	}
+
+	public static Construct3D PLAYER_SHIP() {
+		return PLAYER_SHIP(1, 1, 1);
+	}
+
+	public static Construct3D PLAYER_SHIP(float r, float g, float b) {
+		Construct3D ship = new Construct3D(new Location3D());
+		ship.addShape(new Sphere(5, 5, 5, null, new Location3D(0, 0, 67.9f), r, g, b, 1));
+		ship.addShape(new Sphere(8, 5, 5, null, new Location3D(0, 0, 63f), 0, 0, 0, 1));
+		ship.addShape(new Sphere(13, 5, 5, null, new Location3D(0, 0, 55f), r, g, b, 1));
+		ship.addShape(new Sphere(12, 32, 7, null, new Location3D(0, 0, 31.5f), r, g, b, 1));
+		ship.addShape(new Tube(10, 33.5f, true, null, new Location3D(0, 0, 19.5f), 1, 1, 1, 1));
+
+		// Turret: Minigun
+		ship.addShape(new Tube(5, 4, 5, 4, 1, 32, true, null, new Location3D(11, 0, 34.5f), 0, 0, 0, 1));
+		ship.addShape(new Tube(5, 4, 5, 4, 1, 32, true, null, new Location3D(11, 0, 27.5f), 0, 0, 0, 1));
+		Construct3D minigun = Construct3D.MINIGUN();
+		minigun.setLocation(new Location3D(16, 0, 27.5f));
+		ship.addConstruct(minigun);
+
+		// Engine
+		ship.addShape(new Sphere(3, 32, 3, null, new Location3D(6, 0, 17), 0, 1, 1, 1));
+		ship.addShape(new Sphere(3, 32, 3, null, new Location3D(3, 5.1961524f, 17), 0, 1, 1, 1));
+		ship.addShape(new Sphere(3, 32, 3, null, new Location3D(3, -5.1961524f, 17), 0, 1, 1, 1));
+		ship.addShape(new Sphere(3, 32, 3, null, new Location3D(-6, 0, 17), 0, 1, 1, 1));
+		ship.addShape(new Sphere(3, 32, 3, null, new Location3D(-3, -5.1961524f, 17), 0, 1, 1, 1));
+		ship.addShape(new Sphere(3, 32, 3, null, new Location3D(-3, 5.1961524f, 17), 0, 1, 1, 1));
+		ship.addShape(new Tube(10, 4.5f, true, null, new Location3D(0, 0, 10), 1, 1, 1, 1));
+
+		// Tail		
+		ship.addShape(new Tube(15, 13.5f, 10, 9, 10, 48, true, null, new Location3D(), r, g, b, 1));
+		ship.addShape(new Washer(10.8f, 0, 32, null, new Location3D(0, 0, 5.95f), 0.8f, 0.8f, 0.8f, 1));
+
+		// Jet housings
+		ship.addShape(new Tube(4, 3, 4, 3, 2, 32, true, null, new Location3D(4.5f, 4.5f, 4), 0.7f, 0.7f, 0.7f, 1));
+		ship.addShape(new Tube(4, 3, 4, 3, 2, 32, true, null, new Location3D(-4.5f, 4.5f, 4), 0.7f, 0.7f, 0.7f, 1));
+		ship.addShape(new Tube(4, 3, 4, 3, 2, 32, true, null, new Location3D(-4.5f, -4.5f, 4), 0.7f, 0.7f, 0.7f, 1));
+		ship.addShape(new Tube(4, 3, 4, 3, 2, 32, true, null, new Location3D(4.5f, -4.5f, 4), 0.7f, 0.7f, 0.7f, 1));
+
+		// Jet flames
+		ship.addShape(new Tube(0, 0, 3, 0, 1, 32, true, null, new Location3D(4.5f, 4.5f, 5), 1, 0, 0, 1));
+		ship.addShape(new Tube(0, 0, 3, 0, 1, 32, true, null, new Location3D(-4.5f, 4.5f, 5), 1, 0, 0, 1));
+		ship.addShape(new Tube(0, 0, 3, 0, 1, 32, true, null, new Location3D(-4.5f, -4.5f, 5), 1, 0, 0, 1));
+		ship.addShape(new Tube(0, 0, 3, 0, 1, 32, true, null, new Location3D(4.5f, -4.5f, 5), 1, 0, 0, 1));
+
+		// Quarantined zone for all the transparent entities
+		ship.addShape(new Tube(10, 5, true, null, new Location3D(0, 0, 14.5f), 0.3f, 0.3f, 0.6f, 0.5f));
+
+		return ship;
+	}
 }
