@@ -143,6 +143,13 @@ public class Location3D extends Location {
 	}
 
 	/**
+	 * Creates a copy of the location
+	 */
+	public Location3D clone() {
+		return new Location3D(coordinates[0], coordinates[1], coordinates[2], yaw, pitch, roll);
+	}
+
+	/**
 	 * @return The pixel coordinates of the location, wrapped as a Vector3f object (a 3-D vector)
 	 */
 	public Vector3f getCoordinatesAsVector() {

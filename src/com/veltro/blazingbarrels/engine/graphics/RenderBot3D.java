@@ -46,7 +46,7 @@ public class RenderBot3D {
 		// Apply the location and color:
 		glTranslatef(-location.getX(), location.getY(), -location.getZ());
 		glRotatef(location.getYaw(), 0, 1, 0);
-		glRotatef(location.getPitch() + 90, -1, 0, 0);
+		glRotatef(location.getPitch(), -1, 0, 0);
 		glRotatef(location.getRoll(), 0, 0, 1);
         glColor4f(r, g, b, transparency);
 
@@ -80,7 +80,7 @@ public class RenderBot3D {
 		// Apply the location and color:
 		glTranslatef(-location.getX(), location.getY(), -location.getZ());
 		glRotatef(location.getYaw(), 0, 1, 0);
-		glRotatef(location.getPitch() + 90, -1, 0, 0);
+		glRotatef(location.getPitch(), -1, 0, 0);
 		glRotatef(location.getRoll(), 0, 0, 1);
         glColor4f(r, g, b, transparency);
 
@@ -122,7 +122,7 @@ public class RenderBot3D {
 
         // Apply the location and color:
         glRotatef(location.getYaw(), 0, 1, 0);
-		glRotatef(location.getPitch() + 90, -1, 0, 0);
+		glRotatef(location.getPitch(), -1, 0, 0);
 		glRotatef(location.getRoll(), 0, 0, 1);
         glTranslatef(-location.getX(), location.getY(), -location.getZ());
         glColor4f(r, g, b, transparency);
@@ -161,7 +161,7 @@ public class RenderBot3D {
 		// Apply translations and color:
 		glTranslatef(-location.getX(), location.getY(), -location.getZ());
 		glRotatef(location.getYaw(), 0, 1, 0);
-		glRotatef(location.getPitch() + 90, -1, 0, 0);
+		glRotatef(location.getPitch(), -1, 0, 0);
 		glRotatef(location.getRoll(), 0, 0, 1);
 		glColor4f(r, g, b, transparency);
 
