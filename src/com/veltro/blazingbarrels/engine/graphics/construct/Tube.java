@@ -19,17 +19,27 @@ public class Tube extends Shape3D {
 	/**
 	 * The radius, in pixels, of the (roughly) circular bottom end of the tube
 	 */
-	private float bottomRadius;
+	private float bottomOuterRadius;
 
 	/**
-	 * The radius, in pixels, of the (roughly) circular top end of the tube
+	 * The radius, in pixels, of the hole in the (roughly) circular hole in the bottom of the tube
 	 */
-	private float topRadius;
+	private float bottomInnerRadius;
+
+	/**
+	 * The outer radius, in pixels, of the (roughly) circular top end of the tube
+	 */
+	private float topOuterRadius;
+
+	/**
+	 * The radius, in pixels, of the hole in the (roughly) circular top end of the tube
+	 */
+	private float topInnerRadius;
 
 	/**
 	 * The distance, in pixels, between the two ends of the tube
 	 */
-	private float height;
+	private float length;
 
 	/**
 	 * The number of planar faces comprising the lateral surface of the tube. (Read: the number of sides the cross-
@@ -44,111 +54,183 @@ public class Tube extends Shape3D {
 	private boolean endcaps;
 
 	/**
-	 * Shortcut constructor for regular cylinders (uniform top and bottom radii, lateral face count of 32)
+	 * Shortcut constructor for regular cylinders (uniform top and bottom outer radii, inner radii of zero, lateral
+	 * face count of 32)
 	 * 
 	 * @param radius The tube's radius, in pixels
-	 * @param height The tube's {@link #height}
+	 * @param length The tube's {@link #length}
 	 * @param endcaps Whether the tube has {@link #endcaps}
-	 * @param centerLocation The location of the {@link Construct3D} to which this tube belongs
+	 * @param centerLocation The location of the {@link Construct3D} object to which this sphere belongs
 	 * @param relativeLocation The tube's position (relative to the above centerLocation) and rotation (absolute)
 	 * @param r The red-intensity of the tube's color (a float between 0 and 1)
 	 * @param g The green-intensity of the tube's color (a float between 0 and 1)
 	 * @param b The blue-intensity of the tube's color (a float between 0 and 1)
 	 * @param transparency The transparency level of the tube's surface (a float between 0 and 1; 0 => transparent)
 	 */
-	public Tube(float radius, float height, boolean endcaps, Location3D centerLocation, Location3D relativeLocation,
+	public Tube(float radius, float length, boolean endcaps, Location3D centerLocation, Location3D relativeLocation,
 			float r, float g, float b, float transparency) {
-		this(radius, radius, height, 32, endcaps, centerLocation, relativeLocation, r, g, b, transparency);
+		this(radius, 0, radius, 0, length, 32, endcaps, centerLocation, relativeLocation, r, g, b, transparency);
 	}
 
 	/**
 	 * Complete constructor - initializes each of the tube's dimension specifications and constructs the
 	 * {@link Shape3D shape superclass}
 	 * 
-	 * @param bottomRadius The tube's {@link #bottomRadius}
-	 * @param topRadius The tube's {@link #topRadius}
-	 * @param height The tube's {@link #height}
+	 * @param bottomOuterRadius The tube's {@link #bottomOuterRadius}
+	 * @param bottomInnerRadius The tube's {@link #bottomInnerRadius}
+	 * @param topOuterRadius The tube's {@link #topOuterRadius}
+	 * @param topInnerRadius The tube's {@link #topInnerRadius}
+	 * @param length The tube's {@link #length}
 	 * @param lateralFaceCount See {@link #edges}
 	 * @param endcaps Whether the tube has {@link #endcaps}
-	 * @param centerLocation The location of the {@link Construct3D} to which this tube belongs
+	 * @param centerLocation The location of the {@link Construct3D} object to which this sphere belongs
 	 * @param relativeLocation The tube's position (relative to the above centerLocation) and rotation (absolute)
 	 * @param r The red-intensity of the tube's color (a float between 0 and 1)
 	 * @param g The green-intensity of the tube's color (a float between 0 and 1)
 	 * @param b The blue-intensity of the tube's color (a float between 0 and 1)
 	 * @param transparency The transparency level of the tube's surface (a float between 0 and 1; 0 => transparent)
 	 */
-	public Tube(float bottomRadius, float topRadius, float height, int lateralFaceCount, boolean endcaps,
-			Location3D centerLocation, Location3D relativeLocation, float r, float g, float b, float transparency) {
+	public Tube(float bottomOuterRadius, float bottomInnerRadius, float topOuterRadius, float topInnerRadius,
+			float length, int lateralFaceCount, boolean endcaps, Location3D centerLocation,
+			Location3D relativeLocation, float r, float g, float b, float transparency) {
 		super(centerLocation, relativeLocation, r, g, b, transparency);
-		this.bottomRadius = bottomRadius;
-		this.topRadius = topRadius;
-		this.height = height;
+		this.bottomOuterRadius = bottomOuterRadius;
+		this.bottomInnerRadius= bottomInnerRadius;
+		this.topOuterRadius = topOuterRadius;
+		this.topInnerRadius = topInnerRadius;
+		this.length = length;
 		edges = lateralFaceCount;
 		this.endcaps = endcaps;
 	}
 
 	/**
 	 * Renders the tube by calling the renderColoredCylinder(...) method in {@link RenderBot3D}
+	 * 
+	 * @param x The x-coordinate of the location of the center of the construct to which this shape belong
+	 * @param y The y-coordinate of the above location
+	 * @param z The z-coordinate of the above location
 	 */
 	public void draw() {
-		Location3D l = new Location3D(location.getX() + centerLocation.getX(), location.getY() + centerLocation.getY(),
-				location.getZ() + centerLocation.getZ(), location.getYaw(), location.getPitch(), location.getRoll());
-		RenderBot3D.renderColoredCylinder(bottomRadius, topRadius, height, edges, 5, l, r, g, b, transparency);
+		Location3D l = new Location3D(centerLocation.getX() + renderingPosition.getX(), centerLocation.getY() +
+				renderingPosition.getY(), centerLocation.getZ() + renderingPosition.getZ(), centerLocation.getYaw() +
+				location.getYaw(), centerLocation.getPitch() + location.getPitch(), centerLocation.getRoll() +
+				location.getRoll());
+		RenderBot3D.renderColoredCylinder(bottomOuterRadius, topOuterRadius, length, edges, 1, l, r, g, b, transparency);
+		if (bottomInnerRadius != 0 && topInnerRadius != 0)
+			RenderBot3D.renderColoredCylinder(bottomInnerRadius, topInnerRadius, length, edges, 5, l, r, g, b, transparency);
 		if (endcaps) {
-			RenderBot3D.renderColoredDisk(bottomRadius, 0, edges, l, r, g, b, transparency);
-			l.translate((float) (height * Math.sin(l.getYaw() * Math.PI / 180.0) * Math.sin(l.getPitch() * Math.PI /
-				180.0)), (float) (height * Math.cos(l.getPitch() * Math.PI / 180.0)), (float) (height *
-				Math.cos(l.getYaw() * Math.PI / 180.0) * Math.sin(l.getPitch() * Math.PI / 180.0)));
-			RenderBot3D.renderColoredDisk(topRadius, 0, edges, l, r, g, b, transparency);
+			RenderBot3D.renderColoredDisk(bottomOuterRadius, bottomInnerRadius, edges, l, r, g, b, transparency);
+			l.translate(-(float) (length * Math.sin(l.getYaw() * Math.PI / 180.0) * Math.cos(l.getPitch() * Math.PI /
+				180.0)), (float) (length * Math.sin(l.getPitch() * Math.PI / 180.0)), -(float) (length *
+				Math.cos(l.getYaw() * Math.PI / 180.0) * Math.cos(l.getPitch() * Math.PI / 180.0)));
+			RenderBot3D.renderColoredDisk(topOuterRadius, topInnerRadius, edges, l, r, g, b, transparency);
 		}
 	}
 
 	/**
-	 * @return The {@link #bottomRadius} of the tube
+	 * @return The {@link #bottomOuterRadius} value
 	 */
-	public float getBottomRadius() {
-		return bottomRadius;
+	public float getBottomOuterRadius() {
+		return bottomOuterRadius;
+	}
+
+
+	/**
+	 * Sets the value of {@link #bottomOuterRadius}
+	 *
+	 * @param bottomOuterRadius
+	 */
+	public void setBottomOuterRadius(float bottomOuterRadius) {
+		this.bottomOuterRadius = bottomOuterRadius;
+	}
+
+
+	/**
+	 * @return The {@link #bottomInnerRadius} value
+	 */
+	public float getBottomInnerRadius() {
+		return bottomInnerRadius;
+	}
+
+
+	/**
+	 * Sets the value of {@link #bottomInnerRadius}
+	 *
+	 * @param bottomInnerRadius
+	 */
+	public void setBottomInnerRadius(float bottomInnerRadius) {
+		this.bottomInnerRadius = bottomInnerRadius;
+	}
+
+
+	/**
+	 * @return The {@link #topOuterRadius} value
+	 */
+	public float getTopOuterRadius() {
+		return topOuterRadius;
+	}
+
+
+	/**
+	 * Sets the value of {@link #topOuterRadius}
+	 *
+	 * @param topOuterRadius
+	 */
+	public void setTopOuterRadius(float topOuterRadius) {
+		this.topOuterRadius = topOuterRadius;
+	}
+
+
+	/**
+	 * @return The {@link #topInnerRadius} value
+	 */
+	public float getTopInnerRadius() {
+		return topInnerRadius;
+	}
+
+
+	/**
+	 * Sets the value of {@link #topInnerRadius}
+	 *
+	 * @param topInnerRadius
+	 */
+	public void setTopInnerRadius(float topInnerRadius) {
+		this.topInnerRadius = topInnerRadius;
+	}
+
+
+	/**
+	 * @return The {@link #endcaps} value
+	 */
+	public boolean isEndcaps() {
+		return endcaps;
+	}
+
+
+	/**
+	 * Sets the value of {@link #endcaps}
+	 *
+	 * @param endcaps
+	 */
+	public void setEndcaps(boolean endcaps) {
+		this.endcaps = endcaps;
+	}
+
+
+	/**
+	 * @return The {@link #length} of the tube
+	 */
+	public float getLength() {
+		return length;
 	}
 
 	/**
-	 * Sets the {@link #bottomRadius} of the tube to the provided float value
-	 * 
-	 * @param bottomRadius
-	 */
-	public void setBottomRadius(float bottomRadius) {
-		this.bottomRadius = bottomRadius;
-	}
-
-	/**
-	 * @return The {@link #topRadius} of the tube
-	 */
-	public float getTopRadius() {
-		return topRadius;
-	}
-
-	/**
-	 * Sets the {@link #topRadius} of the tube to the provided float value
-	 * 
-	 * @param topRadius
-	 */
-	public void setTopRadius(float topRadius) {
-		this.topRadius = topRadius;
-	}
-
-	/**
-	 * @return The {@link #height} of the tube
-	 */
-	public float getHeight() {
-		return height;
-	}
-
-	/**
-	 * Sets the {@link #height} of the tube
+	 * Sets the {@link #length} of the tube
 	 * 
 	 * @param height
 	 */
-	public void setHeight(float height) {
-		this.height = height;
+	public void setLength(float height) {
+		this.length = height;
 	}
 
 	/**
@@ -182,5 +264,4 @@ public class Tube extends Shape3D {
 	public void useEndcaps(boolean endcaps) {
 		this.endcaps = endcaps;
 	}
-	
 }

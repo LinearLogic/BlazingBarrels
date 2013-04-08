@@ -36,7 +36,7 @@ public class Washer extends Shape3D {
 	 * @param outerRadius The washer's {@link #outerRadius}
 	 * @param innerRadius The washer's {@link #innerRadius}
 	 * @param edgesCount The washer's {@link #edges edge count}
-	 * @param centerLocation The location of the {@link Construct3D} to which this washer belongs
+	 * @param centerLocation The location of the {@link Construct3D} object to which this sphere belongs
 	 * @param relativeLocation The washer's position (relative to the above centerLocation) and rotation (absolute)
 	 * @param r The red-intensity of the washer's color (a float between 0 and 1)
 	 * @param g The green-intensity of the washer's color (a float between 0 and 1)
@@ -46,16 +46,20 @@ public class Washer extends Shape3D {
 	public Washer(float outerRadius, float innerRadius, int edgeCount, Location3D centerLocation,
 			Location3D relativeLocation, float r, float g, float b, float transparency) {
 		super(centerLocation, relativeLocation, r, g, b, transparency);
+		this.outerRadius = outerRadius;
+		this.innerRadius = innerRadius;
+		edges = edgeCount;
 	}
 
 	/**
-	 * Renders the washer by calling the renderColoredDisk(...) method in {@link RenderBot3D}
+	 * Determines the sphere's absolute location based on its {@link Shape3D#location}, {@link Shape3D#centerLocation},
+	 * {@link Shape3D#renderingPosition} and renders it by calling renderColoredDisk(...) method in {@link RenderBot3D}
 	 */
 	public void draw() {
-		RenderBot3D.renderColoredDisk(outerRadius, innerRadius, edges, new Location3D(location.getX() +
-				centerLocation.getX(), location.getY() + centerLocation.getY(), location.getZ() +
-				centerLocation.getZ(), location.getYaw(), location.getPitch(), location.getRoll()), r, g, b,
-				transparency);
+		RenderBot3D.renderColoredDisk(outerRadius, innerRadius, edges, new Location3D(centerLocation.getX() +
+				renderingPosition.getX(), centerLocation.getY() + renderingPosition.getY(), centerLocation.getZ() +
+				renderingPosition.getZ(),  centerLocation.getYaw() + location.getYaw(), centerLocation.getPitch() +
+				location.getPitch(), centerLocation.getRoll() + location.getRoll()), r, g, b, transparency);
 	}
 
 	/**

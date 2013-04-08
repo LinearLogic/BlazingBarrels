@@ -35,7 +35,7 @@ public class Sphere extends Shape3D {
 	 * Shortcut constructor for smooth spheres - calls the full constructor passing the slices and stacks values as 32
 	 * 
 	 * @param radius The radius, in pixels, of the sphere
-	 * @param centerLocation The location of the {@link Construct3D} to which this sphere belongs
+	 * @param centerLocation The location of the {@link Construct3D} object to which this sphere belongs
 	 * @param relativeLocation The sphere's position (relative to the above centerLocation) and rotation (absolute)
 	 * @param r The red-intensity of the sphere's color (a float between 0 and 1)
 	 * @param g The green-intensity of the sphere's color (a float between 0 and 1)
@@ -54,7 +54,6 @@ public class Sphere extends Shape3D {
 	 * @param radius The radius, in pixels, of the sphere
 	 * @param slices The number of slices to use to render the sphere
 	 * @param stacks The number of stacks to use to render the sphere
-	 * @param centerLocation The location of the {@link Construct3D} to which this sphere belongs
 	 * @param relativeLocation The sphere's position (relative to the above centerLocation) and rotation (absolute)
 	 * @param r The red-intensity of the sphere's color (a float between 0 and 1)
 	 * @param g The green-intensity of the sphere's color (a float between 0 and 1)
@@ -70,16 +69,18 @@ public class Sphere extends Shape3D {
 	}
 
 	/**
-	 * Renders the sphere by calling the renderColoredSphere(...) method in {@link RenderBot3D}
+	 * Determines the sphere's absolute location based on its {@link Shape3D#location}, {@link Shape3D#centerLocation},
+	 * {@link Shape3D#renderingPosition} and renders it by calling renderColoredSphere(...) method in {@link RenderBot3D}
 	 */
 	public void draw() {
-		RenderBot3D.renderColoredSphere(radius, slices, stacks, new Location3D(location.getX() + centerLocation.getX(),
-				location.getY() + centerLocation.getY(), location.getZ() + centerLocation.getZ(), location.getYaw(),
-				location.getPitch(), location.getRoll()), r, g, b, transparency);
+		RenderBot3D.renderColoredSphere(radius, slices, stacks, new Location3D(centerLocation.getX() +
+				renderingPosition.getX(), centerLocation.getY() + renderingPosition.getY(), centerLocation.getZ() +
+				renderingPosition.getZ(),  centerLocation.getYaw() + location.getYaw(), centerLocation.getPitch() +
+				location.getPitch(), centerLocation.getRoll() + location.getRoll()), r, g, b, transparency);
 	}
 
 	/**
-	 * @return The sphere's {@link #radius}
+//	 * @return The sphere's {@link #radius}
 	 */
 	public float getRadius() {
 		return radius;
